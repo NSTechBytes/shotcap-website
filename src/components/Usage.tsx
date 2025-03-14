@@ -1,6 +1,7 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { Copy, Check } from 'lucide-react';
 
 type CodeExampleProps = {
   title: string;
@@ -11,6 +12,7 @@ type CodeExampleProps = {
 
 const CodeExample = ({ title, description, command, output }: CodeExampleProps) => {
   const exampleRef = useRef<HTMLDivElement>(null);
+  const [copied, setCopied] = useState(false);
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -34,6 +36,16 @@ const CodeExample = ({ title, description, command, output }: CodeExampleProps) 
     };
   }, []);
 
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
   return (
     <div 
       ref={exampleRef} 
@@ -42,18 +54,36 @@ const CodeExample = ({ title, description, command, output }: CodeExampleProps) 
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
       <p className="text-github-text/70 mb-4">{description}</p>
       
-      <div className="code-block mb-3">
-        <div className="flex items-center mb-2">
-          <div className="h-3 w-3 rounded-full bg-red-500 opacity-75"></div>
-          <div className="h-3 w-3 rounded-full bg-yellow-500 opacity-75 ml-2"></div>
-          <div className="h-3 w-3 rounded-full bg-green-500 opacity-75 ml-2"></div>
-          <div className="ml-4 text-xs text-github-muted">cmd.exe</div>
+      <div className="code-block mb-3 relative group">
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center">
+            <div className="h-3 w-3 rounded-full bg-red-500 opacity-75"></div>
+            <div className="h-3 w-3 rounded-full bg-yellow-500 opacity-75 ml-2"></div>
+            <div className="h-3 w-3 rounded-full bg-green-500 opacity-75 ml-2"></div>
+            <div className="ml-4 text-xs text-github-muted">cmd.exe</div>
+          </div>
+          <button 
+            onClick={() => copyToClipboard(command)}
+            className="opacity-0 group-hover:opacity-100 transition-opacity p-1.5 text-github-text/70 hover:text-github-accent rounded"
+            title="Copy to clipboard"
+          >
+            {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+          </button>
         </div>
         <code className="text-white">{"> "}{command}</code>
       </div>
       
       {output && (
-        <div className="code-block bg-github-dark border border-github-border">
+        <div className="code-block bg-github-dark border border-github-border relative group">
+          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button 
+              onClick={() => copyToClipboard(output)}
+              className="p-1.5 text-github-text/70 hover:text-github-accent rounded"
+              title="Copy to clipboard"
+            >
+              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+            </button>
+          </div>
           <code className="text-github-text/80 whitespace-pre-wrap">{output}</code>
         </div>
       )}
@@ -110,8 +140,62 @@ const Usage = () => {
       description: "Take 5 screenshots at 10-second intervals.",
       command: "ShotCap.exe -repeat 10 5 -dir C:\\timelapse",
       output: "Timelapse mode activated:\nCapture 1/5 saved to: C:\\timelapse\\screenshot_1.png\nWaiting 10 seconds...\n..."
+    },
+    {
+      title: "Capture Specific Window",
+      description: "Take a screenshot of a window with a specific title.",
+      command: "ShotCap.exe -w \"Calculator\" -f calc_window.png",
+      output: "Captured window: 'Calculator'\nScreenshot saved to: C:\\Users\\username\\calc_window.png"
+    },
+    {
+      title: "Multiple Monitor Capture",
+      description: "Capture a specific monitor in a multi-monitor setup.",
+      command: "ShotCap.exe -m 1 -f second_monitor.png",
+      output: "Capturing monitor 1 (1920x1080)\nScreenshot saved to: C:\\Users\\username\\second_monitor.png"
+    },
+    {
+      title: "Include Mouse Pointer",
+      description: "Include the mouse pointer in your screenshot.",
+      command: "ShotCap.exe -p -f with_cursor.png",
+      output: "Including mouse pointer in capture\nScreenshot saved to: C:\\Users\\username\\with_cursor.png"
+    },
+    {
+      title: "Save as JPEG with Quality",
+      description: "Save the screenshot as JPEG with custom quality settings.",
+      command: "ShotCap.exe -format jpg -quality 85 -f screenshot.jpg",
+      output: "Using format: JPEG (quality: 85)\nScreenshot saved to: C:\\Users\\username\\screenshot.jpg"
+    },
+    {
+      title: "Auto-Open After Saving",
+      description: "Automatically open the screenshot after it's saved.",
+      command: "ShotCap.exe -show -f preview.png",
+      output: "Screenshot saved to: C:\\Users\\username\\preview.png\nOpening image with default viewer..."
+    },
+    {
+      title: "List Available Monitors",
+      description: "List all available monitors and their details.",
+      command: "ShotCap.exe -listmonitors",
+      output: "Available monitors:\nMonitor 0: Primary (1920x1080)\nMonitor 1: Secondary (1440x900)"
+    },
+    {
+      title: "List Visible Windows",
+      description: "List all visible top-level windows.",
+      command: "ShotCap.exe -listwindows",
+      output: "Visible windows:\n1. 'ShotCap Documentation - Google Chrome'\n2. 'Untitled - Notepad'\n3. 'File Explorer'\n4. 'Settings'"
     }
   ];
+
+  const [copySuccess, setCopySuccess] = useState(false);
+  
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopySuccess(true);
+      setTimeout(() => setCopySuccess(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
 
   return (
     <section id="usage" className="py-20 md:py-32 bg-gradient-to-b from-github-dark to-github-dark/95">
@@ -134,8 +218,37 @@ const Usage = () => {
             />
           ))}
 
-          <div className="mt-16 p-6 bg-github-card rounded-xl border border-github-border">
+          <div className="mt-16 p-6 bg-github-card rounded-xl border border-github-border relative group">
             <h3 className="text-xl font-semibold mb-4">Command Reference</h3>
+            <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button 
+                onClick={() => copyToClipboard(`Usage: ShotCap.exe [options]
+Options:
+  -f <filename>         Output file name (default: screenshot.png)
+  -dir <directory>      Output directory (default: current directory)
+  -d <delay>            Delay in seconds before capturing (default: 0)
+  -r <x,y,w,h>          Capture region (default: full screen)
+  -select               Interactively select a region with the mouse (overrides -r)
+  -format <format>      Image format: png, jpg, bmp (default: png)
+  -quality <0-100>      JPEG quality (only for -format jpg, default: 90)
+  -w <window_title>     Capture a specific window by its title
+  -active               Capture the active (foreground) window
+  -m <monitor_index>    Capture a specific monitor (0-based index)
+  -clipboard            Copy captured image to clipboard
+  -show                 Open the captured image after saving
+  -p                    Include the mouse pointer in the screenshot
+  -timestamp            Annotate screenshot with current date/time
+  -repeat <i> <n>       Repeat capture every i seconds for n times
+  -listmonitors         List available monitors and exit
+  -listwindows          List visible top-level windows and exit
+  -v                    Enable verbose logging
+  -h, --help            Display this help message`)}
+                className="p-1.5 text-github-text/70 hover:text-github-accent rounded"
+                title="Copy to clipboard"
+              >
+                {copySuccess ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              </button>
+            </div>
             <div className="code-block overflow-x-auto">
               <code className="text-sm text-github-text/90 whitespace-pre">
 {`Usage: ShotCap.exe [options]

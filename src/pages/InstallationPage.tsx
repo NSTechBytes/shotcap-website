@@ -1,7 +1,6 @@
 
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import Installation from '@/components/Installation';
 
 const InstallationPage = () => {
@@ -16,7 +15,6 @@ const InstallationPage = () => {
       <main className="pt-20">
         <Installation />
       </main>
-      <Footer />
     </div>
   );
 };

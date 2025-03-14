@@ -1,7 +1,6 @@
 
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import FeaturesComponent from '@/components/Features';
 
 const Features = () => {
@@ -16,7 +15,6 @@ const Features = () => {
       <main className="pt-20">
         <FeaturesComponent />
       </main>
-      <Footer />
     </div>
   );
 };

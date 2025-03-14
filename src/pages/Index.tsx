@@ -1,13 +1,15 @@
 
-import React, { useEffect } from 'react';
-import Header from '@/components/Header';
-import Hero from '@/components/Hero';
-import Footer from '@/components/Footer';
+import React, { useEffect } from "react";
+import Header from "@/components/Header";
+import Hero from "@/components/Hero";
+import Features from "@/components/Features";
+import Usage from "@/components/Usage";
+import Installation from "@/components/Installation";
+import Contribute from "@/components/Contribute";
 
-const Index = () => {
+export default function Index() {
   useEffect(() => {
-    // Change page title
-    document.title = 'ShotCap - Command-Line Screenshot Tool';
+    document.title = "ShotCap - Windows Screenshot Command Line Tool";
   }, []);
 
   return (
@@ -15,10 +17,11 @@ const Index = () => {
       <Header />
       <main>
         <Hero />
+        <Features />
+        <Usage />
+        <Installation />
+        <Contribute />
       </main>
-      <Footer />
     </div>
   );
-};
-
-export default Index;
+}

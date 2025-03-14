@@ -1,7 +1,6 @@
 
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 import Usage from '@/components/Usage';
 
 const UsagePage = () => {
@@ -16,7 +15,6 @@ const UsagePage = () => {
       <main className="pt-20">
         <Usage />
       </main>
-      <Footer />
     </div>
   );
 };

@@ -1,22 +1,22 @@
 
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
-import Contribute from '@/components/Contribute';
+import Contact from '@/components/Contact';
 
-const ContributePage = () => {
+const ContactPage = () => {
   useEffect(() => {
     // Change page title
-    document.title = 'Contribute - ShotCap';
+    document.title = 'Contact - ShotCap';
   }, []);
 
   return (
     <div className="min-h-screen bg-github-dark text-github-text">
       <Header />
       <main className="pt-20">
-        <Contribute />
+        <Contact />
       </main>
     </div>
   );
 };
 
-export default ContributePage;
+export default ContactPage;

@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Camera, Github } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,6 +21,10 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const isActive = (path: string) => {
+    return location.pathname === path;
+  };
 
   return (
     <header
@@ -37,11 +42,12 @@ const Header = () => {
         </Link>
         
         <nav className="hidden md:flex items-center space-x-1">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/features" className="nav-link">Features</Link>
-          <Link to="/usage" className="nav-link">Usage</Link>
-          <Link to="/installation" className="nav-link">Installation</Link>
-          <Link to="/contribute" className="nav-link">Contribute</Link>
+          <Link to="/" className={cn("nav-link", isActive('/') && "text-github-accent font-medium")}>Home</Link>
+          <Link to="/features" className={cn("nav-link", isActive('/features') && "text-github-accent font-medium")}>Features</Link>
+          <Link to="/usage" className={cn("nav-link", isActive('/usage') && "text-github-accent font-medium")}>Usage</Link>
+          <Link to="/installation" className={cn("nav-link", isActive('/installation') && "text-github-accent font-medium")}>Installation</Link>
+          <Link to="/contribute" className={cn("nav-link", isActive('/contribute') && "text-github-accent font-medium")}>Contribute</Link>
+          <Link to="/contact" className={cn("nav-link", isActive('/contact') && "text-github-accent font-medium")}>Contact</Link>
           <a 
             href="https://github.com" 
             target="_blank" 
@@ -64,41 +70,62 @@ const Header = () => {
       {/* Mobile menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-40 bg-github-dark/95 backdrop-blur-md pt-20 px-4 animate-fade-in">
+          <div className="flex justify-end mb-4">
+            <button 
+              className="text-github-text p-2"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
           <nav className="flex flex-col space-y-4 px-2">
             <Link 
               to="/" 
-              className="py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20"
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20", 
+                isActive('/') && "text-github-accent font-medium")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home
             </Link>
             <Link 
               to="/features" 
-              className="py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20"
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/features') && "text-github-accent font-medium")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Features
             </Link>
             <Link 
               to="/usage" 
-              className="py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20"
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/usage') && "text-github-accent font-medium")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Usage
             </Link>
             <Link 
               to="/installation" 
-              className="py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20"
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/installation') && "text-github-accent font-medium")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Installation
             </Link>
             <Link 
               to="/contribute" 
-              className="py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20"
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/contribute') && "text-github-accent font-medium")}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Contribute
+            </Link>
+            <Link 
+              to="/contact" 
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/contact') && "text-github-accent font-medium")}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
             </Link>
             <a 
               href="https://github.com" 
