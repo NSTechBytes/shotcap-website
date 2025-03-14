@@ -10,7 +10,10 @@ export default function Index() {
   useEffect(() => {
     document.title = "ShotCap - Windows Screenshot Command Line Tool";
     // Ensure we start at the top of the page when it loads
-    window.scrollTo(0, 0);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }, []);
 
   return (
