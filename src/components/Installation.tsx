@@ -84,7 +84,7 @@ const Installation = () => {
                 Download ShotCap.exe (64-bit)
               </a>
               <div className="code-block mb-2">
-                <code className="text-white">> ShotCap.exe --help</code>
+                <code className="text-white">{"> ShotCap.exe --help"}</code>
               </div>
               <p className="text-sm text-github-text/70">
                 The portable version can be run directly from any location including USB drives.
@@ -103,8 +103,8 @@ const Installation = () => {
                 Download ShotCap-Setup.exe
               </a>
               <div className="code-block mb-2">
-                <code className="text-white">> ShotCap-Setup.exe<br/>
-                > Follow the installation wizard instructions</code>
+                <code className="text-white">{"> ShotCap-Setup.exe"}<br/>
+                {"> Follow the installation wizard instructions"}</code>
               </div>
               <p className="text-sm text-github-text/70">
                 The installer will add ShotCap to your PATH environment variable and create start menu shortcuts.

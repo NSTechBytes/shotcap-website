@@ -49,7 +49,7 @@ const CodeExample = ({ title, description, command, output }: CodeExampleProps) 
           <div className="h-3 w-3 rounded-full bg-green-500 opacity-75 ml-2"></div>
           <div className="ml-4 text-xs text-github-muted">cmd.exe</div>
         </div>
-        <code className="text-white">> {command}</code>
+        <code className="text-white">{"> "}{command}</code>
       </div>
       
       {output && (
