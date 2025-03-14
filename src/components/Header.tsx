@@ -43,6 +43,20 @@ const Header = () => {
         
         <nav className="hidden md:flex items-center space-x-1">
           <Link to="/" className={cn("nav-link", isActive('/') && "text-github-accent font-medium")}>Home</Link>
+          <Link to="/features" className={cn("nav-link", isActive('/features') && "text-github-accent font-medium")}>Features</Link>
+          <Link to="/usage" className={cn("nav-link", isActive('/usage') && "text-github-accent font-medium")}>Usage</Link>
+          <Link to="/installation" className={cn("nav-link", isActive('/installation') && "text-github-accent font-medium")}>Installation</Link>
+          <Link to="/contribute" className={cn("nav-link", isActive('/contribute') && "text-github-accent font-medium")}>Contribute</Link>
+          <Link to="/contact" className={cn("nav-link", isActive('/contact') && "text-github-accent font-medium")}>Contact</Link>
+          <a 
+            href="https://github.com" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="ml-2 inline-flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-colors text-white hover:bg-github-card hover:text-github-accent"
+          >
+            <Github className="w-4 h-4 mr-1" />
+            GitHub
+          </a>
         </nav>
 
         <button 
@@ -72,6 +86,46 @@ const Header = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home
+            </Link>
+            <Link 
+              to="/features" 
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/features') && "text-github-accent font-medium")}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Features
+            </Link>
+            <Link 
+              to="/usage" 
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/usage') && "text-github-accent font-medium")}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Usage
+            </Link>
+            <Link 
+              to="/installation" 
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/installation') && "text-github-accent font-medium")}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Installation
+            </Link>
+            <Link 
+              to="/contribute" 
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/contribute') && "text-github-accent font-medium")}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contribute
+            </Link>
+            <Link 
+              to="/contact" 
+              className={cn("py-3 px-2 text-github-text hover:text-github-accent border-b border-github-border/20",
+                isActive('/contact') && "text-github-accent font-medium")}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
             </Link>
             <a 
               href="https://github.com" 
