@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, Star, GitFork, Monitor } from 'lucide-react';
+import { ArrowDown, Star, GitFork, Monitor, Command, Download, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Hero = () => {
@@ -31,64 +31,85 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-github-accent/5 to-transparent pointer-events-none"></div>
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-github-accent/10 to-transparent pointer-events-none"></div>
+      
+      {/* Animated glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-github-accent/20 rounded-full blur-[120px] opacity-50 animate-pulse-slow pointer-events-none"></div>
+      
+      {/* Grid pattern */}
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBzdHJva2U9IiMzMDM2M2QiIHN0cm9rZS13aWR0aD0iMC41IiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDYwaDYwVjBoLTYweiIvPjwvZz48L3N2Zz4=')] opacity-10 pointer-events-none"></div>
       
       {/* Animated floating dots */}
-      <div className="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
-        {[...Array(15)].map((_, i) => (
+      <div className="absolute inset-0 overflow-hidden opacity-25 pointer-events-none">
+        {[...Array(20)].map((_, i) => (
           <div
             key={i}
             className={cn(
-              "absolute w-1 h-1 rounded-full bg-github-accent/80",
+              "absolute rounded-full",
               "animate-pulse-slow",
-              i % 3 === 0 ? "w-1.5 h-1.5" : "",
-              i % 5 === 0 ? "w-2 h-2" : ""
+              i % 3 === 0 ? "w-1.5 h-1.5 bg-github-accent/90" : "",
+              i % 5 === 0 ? "w-2 h-2 bg-github-accent/80" : "",
+              i % 7 === 0 ? "w-3 h-3 bg-white/30" : "w-1 h-1 bg-white/50"
             )}
             style={{
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${3 + Math.random() * 10}s`,
             }}
           ></div>
         ))}
       </div>
 
-      <div ref={heroRef} className="container mx-auto px-4 text-center transition-all duration-700 ease-out opacity-0 translate-y-10">
-        <div className="inline-flex items-center mb-4 px-3 py-1 rounded-full bg-github-card border border-github-border text-xs font-medium text-github-accent">
-          <Monitor className="w-3.5 h-3.5 mr-1.5" />
-          <span>Windows Command-Line Tool</span>
+      <div ref={heroRef} className="container mx-auto px-4 text-center transition-all duration-1000 ease-out opacity-0 translate-y-10">
+        <div className="inline-flex items-center mb-6 px-3 py-1 rounded-full bg-github-card/80 border border-github-border text-xs font-medium text-github-accent animate-slide-up">
+          <Command className="w-3.5 h-3.5 mr-1.5" />
+          <span>Windows Screenshot Utility</span>
         </div>
         
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-github-text/90 tracking-tight">
-          ShotCap
+        <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-br from-white via-white/90 to-github-text/70 tracking-tight leading-tight max-w-4xl mx-auto animate-slide-up" style={{animationDelay: '150ms'}}>
+          Screenshot with <span className="text-github-accent">Precision</span>
         </h1>
         
-        <p className="text-xl md:text-2xl text-github-text/80 mb-8 max-w-3xl mx-auto">
-          Versatile Windows screenshot utility with precise capture controls, directly from your command line.
+        <p className="text-xl md:text-2xl text-github-text/80 mb-10 max-w-3xl mx-auto leading-relaxed animate-slide-up" style={{animationDelay: '300ms'}}>
+          Versatile Windows screenshot utility with precise capture controls,
+          <br className="hidden md:block" /> directly from your command line.
         </p>
         
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <Link to="/installation" className="btn-primary w-full sm:w-auto">
-            Download for Windows
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{animationDelay: '450ms'}}>
+          <Link to="/installation" className="group relative w-full sm:w-auto overflow-hidden rounded-xl bg-github-accent px-6 py-3 text-white transition-all duration-300 hover:bg-github-accent/90 hover:scale-105 active:scale-100">
+            <div className="relative flex items-center justify-center gap-2">
+              <Download className="w-5 h-5" />
+              <span className="font-medium">Download for Windows</span>
+              <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </div>
+            <div className="absolute inset-0 -translate-y-full bg-gradient-to-r from-white/10 to-transparent opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"></div>
           </Link>
+
           <div className="flex items-center gap-2">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              <Star className="w-4 h-4 mr-1.5" />
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-github-border bg-github-card hover:bg-github-card/80 transition-all duration-300">
+              <Star className="w-5 h-5" />
               <span>Star</span>
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn-secondary">
-              <GitFork className="w-4 h-4 mr-1.5" />
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-github-border bg-github-card hover:bg-github-card/80 transition-all duration-300">
+              <GitFork className="w-5 h-5" />
               <span>Fork</span>
             </a>
           </div>
         </div>
         
-        <div className="animate-bounce mt-16 opacity-50 hover:opacity-100 transition-opacity">
-          <Link to="/features" className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-github-border">
+        <Link 
+          to="/features" 
+          className="inline-flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity animate-bounce"
+        >
+          <span className="text-sm text-github-text/80">Learn More</span>
+          <div className="w-10 h-10 rounded-full border border-github-border flex items-center justify-center bg-github-card/50 backdrop-blur-sm">
             <ArrowDown className="w-5 h-5" />
-          </Link>
-        </div>
+          </div>
+        </Link>
       </div>
     </section>
   );
