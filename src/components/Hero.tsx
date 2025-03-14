@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, Star, GitFork, Windows } from 'lucide-react';
+import { ArrowDown, Star, GitFork, Monitor } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Hero = () => {
@@ -56,7 +56,7 @@ const Hero = () => {
 
       <div ref={heroRef} className="container mx-auto px-4 text-center transition-all duration-700 ease-out opacity-0 translate-y-10">
         <div className="inline-flex items-center mb-4 px-3 py-1 rounded-full bg-github-card border border-github-border text-xs font-medium text-github-accent">
-          <Windows className="w-3.5 h-3.5 mr-1.5" />
+          <Monitor className="w-3.5 h-3.5 mr-1.5" />
           <span>Windows Command-Line Tool</span>
         </div>
         
