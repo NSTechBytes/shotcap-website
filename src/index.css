@@ -150,4 +150,14 @@
       min-height: -webkit-fill-available;
     }
   }
+  
+  /* Mobile sidebar fix */
+  .mobile-sidebar-fix {
+    position: fixed;
+    top: auto;
+    height: auto;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+    z-index: 40;
+  }
 }
