@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
-import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings } from 'lucide-react';
+import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings, Github } from 'lucide-react';
 
 const Installation = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -72,9 +72,9 @@ const Installation = () => {
           <div className="mb-10">
             <h3 className="text-xl font-semibold mb-4">Installation Methods</h3>
             
-            {/* Method 1 */}
+            {/* Method 1: Direct Download */}
             <div className="mb-8">
-              <h4 className="text-lg font-medium mb-3">Method 1: Direct Download</h4>
+              <h4 className="text-lg font-medium mb-3">Direct Portable Download</h4>
               <p className="mb-4">Download the portable executable file directly and use it without installation:</p>
               <a 
                 href="#download" 
@@ -84,37 +84,41 @@ const Installation = () => {
                 Download ShotCap.exe (64-bit)
               </a>
               <div className="code-block mb-2">
-                <code className="text-white">{"> ShotCap.exe --help"}</code>
+                <code className="text-white">{'> ShotCap.exe --help'}</code>
               </div>
               <p className="text-sm text-github-text/70">
                 The portable version can be run directly from any location including USB drives.
               </p>
             </div>
             
-            {/* Method 2 */}
+            {/* Source Code */}
             <div>
-              <h4 className="text-lg font-medium mb-3">Method 2: Setup Installer</h4>
-              <p className="mb-4">Download and run the installer for a complete installation with shortcuts:</p>
+              <h4 className="text-lg font-medium mb-3">Source Code</h4>
+              <p className="mb-4">Clone the repository and build from source for full customization:</p>
               <a 
-                href="#download" 
+                href="https://github.com/shotcap" 
+                target="_blank" 
+                rel="noopener noreferrer"
                 className="inline-flex items-center text-github-accent hover:text-github-accent/90 mb-4 transition-colors"
               >
-                <DownloadCloud className="w-5 h-5 mr-2" />
-                Download ShotCap-Setup.exe
+                <Github className="w-5 h-5 mr-2" />
+                View Source on GitHub
               </a>
               <div className="code-block mb-2">
-                <code className="text-white">{"> ShotCap-Setup.exe"}<br/>
-                {"> Follow the installation wizard instructions"}</code>
+                <code className="text-white">{'> git clone https://github.com/shotcap/shotcap.git'}<br/>
+                {'> cd shotcap'}<br/>
+                {'> npm install'}<br/>
+                {'> npm run build'}</code>
               </div>
               <p className="text-sm text-github-text/70">
-                The installer will add ShotCap to your PATH environment variable and create start menu shortcuts.
+                Building from source allows you to customize the tool to your specific needs.
               </p>
             </div>
           </div>
 
           <div id="download" className="mt-12 p-6 bg-gradient-to-r from-github-card to-github-card/80 rounded-xl border border-github-border">
             <h3 className="text-xl font-semibold mb-4">Download Options</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               <a 
                 href="#" 
                 className="p-4 bg-github-dark rounded-lg border border-github-border hover:border-github-accent/70 transition-colors flex flex-col items-center text-center"
@@ -122,14 +126,6 @@ const Installation = () => {
                 <DownloadCloud className="w-6 h-6 text-github-accent mb-2" />
                 <span className="font-medium">ShotCap.exe</span>
                 <span className="text-xs text-github-text/70 mt-1">Portable (7.2 MB)</span>
-              </a>
-              <a 
-                href="#" 
-                className="p-4 bg-github-dark rounded-lg border border-github-border hover:border-github-accent/70 transition-colors flex flex-col items-center text-center"
-              >
-                <DownloadCloud className="w-6 h-6 text-github-accent mb-2" />
-                <span className="font-medium">ShotCap-Setup.exe</span>
-                <span className="text-xs text-github-text/70 mt-1">Installer (8.5 MB)</span>
               </a>
             </div>
             

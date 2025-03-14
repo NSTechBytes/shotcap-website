@@ -1,9 +1,37 @@
 
-import React, { useEffect, useRef } from 'react';
-import { Mail, Github, Twitter } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Mail, Github, Twitter, Check } from 'lucide-react';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+
+const formSchema = z.object({
+  name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
+  email: z.string().email({ message: 'Please enter a valid email address' }),
+  subject: z.string().min(5, { message: 'Subject must be at least 5 characters' }),
+  message: z.string().min(10, { message: 'Message must be at least 10 characters' }),
+});
 
 const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const { toast } = useToast();
+  
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: ''
+    },
+  });
   
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -26,6 +54,38 @@ const Contact = () => {
       }
     };
   }, []);
+  
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsSubmitting(true);
+    
+    // Simulating form submission
+    try {
+      // In a real app, you would send the data to your backend
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      form.reset();
+      setIsSuccess(true);
+      
+      toast({
+        title: "Message sent",
+        description: "Thanks for contacting us. We'll get back to you soon!",
+        variant: "default",
+      });
+      
+      // Reset success state after a while
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 3000);
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "There was a problem sending your message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="contact" className="py-20 md:py-32 bg-gradient-to-b from-github-dark to-github-dark/95">
@@ -38,7 +98,7 @@ const Contact = () => {
             <h2 className="text-3xl md:text-4xl font-bold mb-4">Contact Us</h2>
             <p className="text-github-text/70 mx-auto">
               Have questions or feedback about ShotCap? We'd love to hear from you! 
-              Reach out to us through any of the channels below.
+              Reach out to us through any of the channels below or use the contact form.
             </p>
           </div>
           
@@ -88,6 +148,113 @@ const Contact = () => {
                 @shotcapapp
               </a>
             </div>
+          </div>
+          
+          {/* Contact Form */}
+          <div className="bg-github-card p-8 rounded-xl border border-github-border mb-10">
+            <h3 className="text-xl font-semibold mb-6 text-center">Send us a Message</h3>
+            
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-github-text">Name</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Your name" 
+                            className="bg-github-dark border-github-border text-github-text" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-github-text">Email</FormLabel>
+                        <FormControl>
+                          <Input 
+                            placeholder="Your email" 
+                            type="email" 
+                            className="bg-github-dark border-github-border text-github-text" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-github-text">Subject</FormLabel>
+                      <FormControl>
+                        <Input 
+                          placeholder="Message subject" 
+                          className="bg-github-dark border-github-border text-github-text" 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <FormField
+                  control={form.control}
+                  name="message"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-github-text">Message</FormLabel>
+                      <FormControl>
+                        <Textarea 
+                          placeholder="Your message" 
+                          className="bg-github-dark border-github-border text-github-text min-h-[150px]" 
+                          {...field} 
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                <Button 
+                  type="submit" 
+                  className="w-full bg-github-accent hover:bg-github-accent/90 text-white"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <span className="flex items-center">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Sending...
+                    </span>
+                  ) : isSuccess ? (
+                    <span className="flex items-center">
+                      <Check className="w-4 h-4 mr-2" />
+                      Sent Successfully
+                    </span>
+                  ) : (
+                    "Send Message"
+                  )}
+                </Button>
+              </form>
+            </Form>
           </div>
           
           <div className="bg-github-card p-8 rounded-xl border border-github-border">
