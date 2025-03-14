@@ -68,7 +68,7 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out font-poppins',
         isScrolled
           ? 'py-2 sm:py-3 bg-github-dark/90 backdrop-blur-md border border-github-border/50 mx-2 sm:mx-4 mt-2 rounded-xl shadow-lg'
           : isHomePage 
@@ -140,8 +140,8 @@ const Header = () => {
               <div className="flex flex-col space-y-2">
                 <Link 
                   to="/" 
-                  className={cn("py-3 px-4 text-white hover:text-github-accent rounded-lg bg-github-card/50 hover:bg-github-card/80 border border-github-border/20 flex items-center justify-between text-base font-medium transition-all duration-300", 
-                    isActive('/') && "text-github-accent font-medium bg-github-card/80 border-github-accent/20")}
+                  className={cn("mobile-menu-item", 
+                    isActive('/') && "active")}
                   onClick={() => handleNavigation('/')}
                 >
                   Home
@@ -149,8 +149,8 @@ const Header = () => {
                 </Link>
                 <Link 
                   to="/features" 
-                  className={cn("py-3 px-4 text-white hover:text-github-accent rounded-lg bg-github-card/50 hover:bg-github-card/80 border border-github-border/20 flex items-center justify-between text-base font-medium transition-all duration-300",
-                    isActive('/features') && "text-github-accent font-medium bg-github-card/80 border-github-accent/20")}
+                  className={cn("mobile-menu-item",
+                    isActive('/features') && "active")}
                   onClick={() => handleNavigation('/features')}
                 >
                   Features
@@ -158,8 +158,8 @@ const Header = () => {
                 </Link>
                 <Link 
                   to="/usage" 
-                  className={cn("py-3 px-4 text-white hover:text-github-accent rounded-lg bg-github-card/50 hover:bg-github-card/80 border border-github-border/20 flex items-center justify-between text-base font-medium transition-all duration-300",
-                    isActive('/usage') && "text-github-accent font-medium bg-github-card/80 border-github-accent/20")}
+                  className={cn("mobile-menu-item",
+                    isActive('/usage') && "active")}
                   onClick={() => handleNavigation('/usage')}
                 >
                   Usage
@@ -167,8 +167,8 @@ const Header = () => {
                 </Link>
                 <Link 
                   to="/installation" 
-                  className={cn("py-3 px-4 text-white hover:text-github-accent rounded-lg bg-github-card/50 hover:bg-github-card/80 border border-github-border/20 flex items-center justify-between text-base font-medium transition-all duration-300",
-                    isActive('/installation') && "text-github-accent font-medium bg-github-card/80 border-github-accent/20")}
+                  className={cn("mobile-menu-item",
+                    isActive('/installation') && "active")}
                   onClick={() => handleNavigation('/installation')}
                 >
                   Installation
@@ -176,8 +176,8 @@ const Header = () => {
                 </Link>
                 <Link 
                   to="/contribute" 
-                  className={cn("py-3 px-4 text-white hover:text-github-accent rounded-lg bg-github-card/50 hover:bg-github-card/80 border border-github-border/20 flex items-center justify-between text-base font-medium transition-all duration-300",
-                    isActive('/contribute') && "text-github-accent font-medium bg-github-card/80 border-github-accent/20")}
+                  className={cn("mobile-menu-item",
+                    isActive('/contribute') && "active")}
                   onClick={() => handleNavigation('/contribute')}
                 >
                   Contribute
@@ -185,8 +185,8 @@ const Header = () => {
                 </Link>
                 <Link 
                   to="/contact" 
-                  className={cn("py-3 px-4 text-white hover:text-github-accent rounded-lg bg-github-card/50 hover:bg-github-card/80 border border-github-border/20 flex items-center justify-between text-base font-medium transition-all duration-300",
-                    isActive('/contact') && "text-github-accent font-medium bg-github-card/80 border-github-accent/20")}
+                  className={cn("mobile-menu-item",
+                    isActive('/contact') && "active")}
                   onClick={() => handleNavigation('/contact')}
                 >
                   Contact

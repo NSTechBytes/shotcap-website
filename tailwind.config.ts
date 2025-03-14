@@ -80,7 +80,8 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
-				mono: ['JetBrains Mono', 'Menlo', 'monospace']
+				mono: ['JetBrains Mono', 'Menlo', 'monospace'],
+				poppins: ['Poppins', 'sans-serif']
 			},
 			keyframes: {
 				'accordion-down': {
