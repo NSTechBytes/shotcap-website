@@ -47,7 +47,7 @@ const Header = () => {
         isScrolled
           ? 'py-3 bg-github-dark/90 backdrop-blur-md border border-github-border/50 mx-4 mt-2 rounded-xl shadow-lg'
           : isHomePage 
-            ? 'py-5 bg-gradient-to-b from-github-dark via-github-dark/80 to-transparent backdrop-blur-sm' 
+            ? 'py-5 bg-transparent' 
             : 'py-5 bg-github-dark/90 backdrop-blur-md'
       )}
     >
