@@ -2,9 +2,6 @@
 import React, { useEffect } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import Features from "@/components/Features";
-import Installation from "@/components/Installation";
-import Footer from "@/components/Footer";
 
 export default function Index() {
   useEffect(() => {
@@ -33,10 +30,7 @@ export default function Index() {
       <Header />
       <main className="pt-24 relative z-10">
         <Hero />
-        <Features />
-        <Installation />
       </main>
-      <Footer />
     </div>
   );
 }

@@ -50,21 +50,21 @@
     @apply bg-github-dark text-github-text antialiased overflow-x-hidden;
   }
 
-  /* Custom scrollbar */
+  /* Enhanced custom scrollbar */
   ::-webkit-scrollbar {
-    @apply w-2;
+    @apply w-2.5;
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-github-dark;
+    @apply bg-github-dark/50 backdrop-blur-sm;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-github-border rounded-full;
+    @apply bg-github-accent/30 rounded-full hover:bg-github-accent/50 transition-colors duration-300;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-github-muted;
+    @apply bg-github-accent/70;
   }
 }
 

@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowDown, Star, GitFork, Monitor, Command, Download, ChevronRight } from 'lucide-react';
@@ -93,15 +94,22 @@ const Hero = () => {
           </div>
         </div>
         
-        <Link 
-          to="/features" 
-          className="inline-flex flex-col items-center gap-2 opacity-50 hover:opacity-100 transition-opacity animate-bounce"
-        >
-          <span className="text-sm text-github-text/80">Learn More</span>
-          <div className="w-10 h-10 rounded-full border border-github-border flex items-center justify-center bg-github-card/50 backdrop-blur-sm">
-            <ArrowDown className="w-5 h-5" />
+        <div className="flex flex-col items-center gap-6 mt-8">
+          <div className="flex items-center justify-center gap-4">
+            <Link to="/features" className="btn-secondary">
+              <Monitor className="w-4 h-4 mr-2" />
+              <span>Features</span>
+            </Link>
+            <Link to="/usage" className="btn-secondary">
+              <Command className="w-4 h-4 mr-2" />
+              <span>Usage</span>
+            </Link>
+            <Link to="/installation" className="btn-secondary">
+              <Download className="w-4 h-4 mr-2" />
+              <span>Installation</span>
+            </Link>
           </div>
-        </Link>
+        </div>
       </div>
     </section>
   );
