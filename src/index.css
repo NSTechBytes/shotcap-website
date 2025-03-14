@@ -35,16 +35,6 @@
     --input: 222 18% 21%;
     --ring: 216 87% 62%;
 
-    /* Add sidebar variables with solid background colors */
-    --sidebar-background: 222 20% 7%;
-    --sidebar-foreground: 210 16% 82%;
-    --sidebar-primary: 216 87% 62%;
-    --sidebar-primary-foreground: 210 16% 95%;
-    --sidebar-accent: 215 87% 42%;
-    --sidebar-accent-foreground: 210 16% 95%;
-    --sidebar-border: 222 18% 21%;
-    --sidebar-ring: 216 87% 62%;
-
     --radius: 0.5rem;
   }
 
