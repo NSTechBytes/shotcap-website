@@ -1,6 +1,21 @@
 
 import React, { useEffect, useRef } from 'react';
-import { Camera, Command, Layout, Layers, Maximize, PanelTopOpen, Clock, TerminalSquare } from 'lucide-react';
+import { 
+  Monitor, 
+  MousePointer, 
+  Clock, 
+  Copy, 
+  Search, 
+  Maximize, 
+  Layout, 
+  Calendar, 
+  Image, 
+  FolderOpen, 
+  Play, 
+  RepeatIcon, 
+  List, 
+  Terminal 
+} from 'lucide-react';
 
 type FeatureCardProps = {
   icon: React.ReactNode;
@@ -56,43 +71,73 @@ const Features = () => {
   const featuresData = [
     {
       icon: <Maximize />,
-      title: "Full Screen Capture",
+      title: "Full Desktop Capture",
       description: "Capture your entire desktop with a single command. Perfect for documentation and presentations."
     },
     {
+      icon: <Search />,
+      title: "Region Capture",
+      description: "Capture a specific region using predefined coordinates or select interactively with a crosshair cursor."
+    },
+    {
       icon: <Layout />,
-      title: "Window Selection",
-      description: "Capture specific application windows without manual cropping. Maintains window boundaries perfectly."
+      title: "Window Capture",
+      description: "Capture specific windows by title or capture the active foreground window automatically."
     },
     {
-      icon: <PanelTopOpen />,
-      title: "Region Selection",
-      description: "Select and capture only the regions you need with precise coordinate selection."
-    },
-    {
-      icon: <Command />,
-      title: "Command-line Interface",
-      description: "Powerful CLI that integrates with your existing workflow and automation scripts."
+      icon: <Monitor />,
+      title: "Monitor Selection",
+      description: "Capture a specific monitor by index, perfect for multi-display setups."
     },
     {
       icon: <Clock />,
-      title: "Timed Captures",
-      description: "Set up delayed captures to prepare your screen exactly how you want it."
+      title: "Delay Capture",
+      description: "Set a countdown delay before capturing to prepare your screen exactly how you want it."
     },
     {
-      icon: <Layers />,
+      icon: <MousePointer />,
+      title: "Mouse Pointer Capture",
+      description: "Include or exclude the mouse cursor in your screenshots as needed."
+    },
+    {
+      icon: <Calendar />,
+      title: "Timestamp Annotation",
+      description: "Automatically overlay the current date and time on your screenshots for reference."
+    },
+    {
+      icon: <Image />,
       title: "Multiple Output Formats",
-      description: "Save your screenshots in PNG, JPG, or other formats based on your needs."
+      description: "Save screenshots as PNG, JPEG (with quality control), or BMP based on your needs."
     },
     {
-      icon: <TerminalSquare />,
-      title: "Scriptable & Automatable",
-      description: "Easily incorporate into shell scripts and automation workflows."
+      icon: <FolderOpen />,
+      title: "Output Directory Control",
+      description: "Specify where to save your screenshots and control file naming."
     },
     {
-      icon: <Camera />,
-      title: "Multi-Monitor Support",
-      description: "Seamlessly capture content across multiple displays with proper handling."
+      icon: <Copy />,
+      title: "Clipboard Support",
+      description: "Copy screenshots directly to clipboard for immediate use in other applications."
+    },
+    {
+      icon: <Play />,
+      title: "Auto-Open Feature",
+      description: "Automatically open captured images after saving for immediate review."
+    },
+    {
+      icon: <RepeatIcon />,
+      title: "Timelapse Mode",
+      description: "Capture multiple screenshots at set intervals for time-based documentation."
+    },
+    {
+      icon: <List />,
+      title: "System Listing",
+      description: "Easily list available monitors or visible windows to target your captures accurately."
+    },
+    {
+      icon: <Terminal />,
+      title: "Command-line Interface",
+      description: "Powerful CLI that integrates with your scripts and automation workflows."
     }
   ];
 
@@ -102,11 +147,11 @@ const Features = () => {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Powerful Features</h2>
           <p className="text-github-text/70 max-w-2xl mx-auto">
-            ShotCap provides a robust set of features for capturing perfect screenshots directly from your terminal
+            ShotCap provides a robust set of features for capturing perfect screenshots directly from your Windows command line
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {featuresData.map((feature, index) => (
             <FeatureCard
               key={index}

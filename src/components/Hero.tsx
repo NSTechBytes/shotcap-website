@@ -1,7 +1,7 @@
 
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowDown, Star, GitFork } from 'lucide-react';
+import { ArrowDown, Star, GitFork, Windows } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Hero = () => {
@@ -55,8 +55,9 @@ const Hero = () => {
       </div>
 
       <div ref={heroRef} className="container mx-auto px-4 text-center transition-all duration-700 ease-out opacity-0 translate-y-10">
-        <div className="inline-block mb-4 px-3 py-1 rounded-full bg-github-card border border-github-border text-xs font-medium text-github-accent">
-          Powerful Command-Line Tool
+        <div className="inline-flex items-center mb-4 px-3 py-1 rounded-full bg-github-card border border-github-border text-xs font-medium text-github-accent">
+          <Windows className="w-3.5 h-3.5 mr-1.5" />
+          <span>Windows Command-Line Tool</span>
         </div>
         
         <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-github-text/90 tracking-tight">
@@ -64,12 +65,12 @@ const Hero = () => {
         </h1>
         
         <p className="text-xl md:text-2xl text-github-text/80 mb-8 max-w-3xl mx-auto">
-          Capture screenshots with precision and flexibility directly from your command line.
+          Versatile Windows screenshot utility with precise capture controls, directly from your command line.
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
           <Link to="/installation" className="btn-primary w-full sm:w-auto">
-            Download ShotCap
+            Download for Windows
           </Link>
           <div className="flex items-center gap-2">
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn-secondary">
