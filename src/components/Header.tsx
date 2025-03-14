@@ -112,11 +112,11 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Mobile menu - improved for better responsiveness */}
+      {/* Completely redesigned mobile menu with fixed positioning */}
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-github-dark/95 backdrop-blur-md animate-fade-in">
-          <div className="flex flex-col h-full">
-            <div className="flex justify-between items-center p-4 border-b border-github-border/20">
+        <div className="md:hidden fixed inset-0 z-50 bg-github-dark/95 backdrop-blur-md overflow-auto">
+          <div className="flex flex-col min-h-full max-h-[100dvh]">
+            <div className="sticky top-0 z-10 flex justify-between items-center p-4 border-b border-github-border/20 bg-github-dark/95 backdrop-blur-md">
               <Link 
                 to="/" 
                 className="flex items-center space-x-2"
@@ -137,7 +137,7 @@ const Header = () => {
             </div>
             
             <nav className="flex-1 overflow-y-auto p-4">
-              <div className="flex flex-col space-y-2">
+              <div className="flex flex-col space-y-3">
                 <Link 
                   to="/" 
                   className={cn("mobile-menu-item", 
@@ -195,7 +195,7 @@ const Header = () => {
               </div>
             </nav>
             
-            <div className="p-4 border-t border-github-border/20">
+            <div className="sticky bottom-0 p-4 border-t border-github-border/20 bg-github-dark/95 backdrop-blur-md">
               <a 
                 href="https://github.com" 
                 target="_blank" 

@@ -62,7 +62,7 @@ const SheetContent = React.forwardRef<
       ref={ref}
       className={cn(
         sheetVariants({ side }), 
-        "max-h-screen overflow-auto mobile-sidebar-fix", // Updated for better mobile handling
+        "h-[100dvh] overflow-y-auto", // Using dvh for better mobile viewport handling
         className
       )}
       {...props}
