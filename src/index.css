@@ -98,6 +98,15 @@
   .feature-card {
     @apply rounded-xl bg-github-card border border-github-border p-6 transition-all duration-300 hover:border-github-accent/50 hover:shadow-[0_0_15px_rgba(88,166,255,0.1)];
   }
+  
+  /* Mobile menu item */
+  .mobile-menu-item {
+    @apply py-3 px-4 text-white hover:text-github-accent rounded-lg bg-github-card/50 hover:bg-github-card/80 border border-github-border/20 flex items-center justify-between text-base font-medium transition-all duration-300;
+  }
+  
+  .mobile-menu-item.active {
+    @apply text-github-accent font-medium bg-github-card/80 border-github-accent/20;
+  }
 }
 
 @layer utilities {
@@ -122,6 +131,23 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+  
+  /* Mobile specific utility classes */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Fix for mobile safari issues */
+  @supports (-webkit-touch-callout: none) {
+    .min-h-screen {
+      min-height: -webkit-fill-available;
     }
   }
 }
