@@ -38,18 +38,22 @@ const Header = () => {
     window.scrollTo(0, 0);
   };
 
+  const isHomePage = location.pathname === '/';
+
   return (
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out',
         isScrolled
           ? 'py-3 bg-github-dark/90 backdrop-blur-md border border-github-border/50 mx-4 mt-2 rounded-xl shadow-lg'
-          : 'py-5 bg-transparent'
+          : isHomePage 
+            ? 'py-5 bg-gradient-to-b from-github-dark via-github-dark/80 to-transparent backdrop-blur-sm' 
+            : 'py-5 bg-github-dark/90 backdrop-blur-md'
       )}
     >
       <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center space-x-2 group">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-github-accent to-github-accent/70 flex items-center justify-center transition-transform duration-300 group-hover:rotate-6 shadow-md">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-github-accent to-github-accent/70 flex items-center justify-center transition-all duration-300 group-hover:rotate-6 shadow-md group-hover:shadow-github-accent/20">
             <Camera className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-github-accent">ShotCap</span>
