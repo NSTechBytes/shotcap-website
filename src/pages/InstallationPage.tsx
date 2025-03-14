@@ -1,24 +1,24 @@
 
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
-import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
+import Installation from '@/components/Installation';
 
-const Index = () => {
+const InstallationPage = () => {
   useEffect(() => {
     // Change page title
-    document.title = 'ShotCap - Command-Line Screenshot Tool';
+    document.title = 'Installation - ShotCap';
   }, []);
 
   return (
     <div className="min-h-screen bg-github-dark text-github-text">
       <Header />
-      <main>
-        <Hero />
+      <main className="pt-20">
+        <Installation />
       </main>
       <Footer />
     </div>
   );
 };
 
-export default Index;
+export default InstallationPage;

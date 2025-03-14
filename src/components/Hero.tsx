@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowDown, Star, GitFork } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -67,9 +68,9 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-          <a href="#download" className="btn-primary w-full sm:w-auto">
+          <Link to="/installation" className="btn-primary w-full sm:w-auto">
             Download ShotCap
-          </a>
+          </Link>
           <div className="flex items-center gap-2">
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="btn-secondary">
               <Star className="w-4 h-4 mr-1.5" />
@@ -83,9 +84,9 @@ const Hero = () => {
         </div>
         
         <div className="animate-bounce mt-16 opacity-50 hover:opacity-100 transition-opacity">
-          <a href="#features" className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-github-border">
+          <Link to="/features" className="inline-flex items-center justify-center w-10 h-10 rounded-full border border-github-border">
             <ArrowDown className="w-5 h-5" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

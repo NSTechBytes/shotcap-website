@@ -1,24 +1,24 @@
 
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
-import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
+import Contribute from '@/components/Contribute';
 
-const Index = () => {
+const ContributePage = () => {
   useEffect(() => {
     // Change page title
-    document.title = 'ShotCap - Command-Line Screenshot Tool';
+    document.title = 'Contribute - ShotCap';
   }, []);
 
   return (
     <div className="min-h-screen bg-github-dark text-github-text">
       <Header />
-      <main>
-        <Hero />
+      <main className="pt-20">
+        <Contribute />
       </main>
       <Footer />
     </div>
   );
 };
 
-export default Index;
+export default ContributePage;

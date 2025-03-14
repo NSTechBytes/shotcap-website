@@ -1,24 +1,24 @@
 
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
-import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
+import FeaturesComponent from '@/components/Features';
 
-const Index = () => {
+const Features = () => {
   useEffect(() => {
     // Change page title
-    document.title = 'ShotCap - Command-Line Screenshot Tool';
+    document.title = 'Features - ShotCap';
   }, []);
 
   return (
     <div className="min-h-screen bg-github-dark text-github-text">
       <Header />
-      <main>
-        <Hero />
+      <main className="pt-20">
+        <FeaturesComponent />
       </main>
       <Footer />
     </div>
   );
 };
 
-export default Index;
+export default Features;
