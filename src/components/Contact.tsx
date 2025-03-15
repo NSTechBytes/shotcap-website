@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, Github, Twitter, Check } from 'lucide-react';
+import { Mail, Github, Twitter, Check, AlertCircle } from 'lucide-react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -17,10 +17,15 @@ const formSchema = z.object({
   message: z.string().min(10, { message: 'Message must be at least 10 characters' }),
 });
 
+// MailerSend API key
+const MAILERSEND_API_KEY = 'mlsn.c2b7f2b2f61e2d31fbef9e57d42daa79b121f0b4b089b8cfda61065ecefff935';
+const RECIPIENT_EMAIL = 'nasirguestpost@gmail.com';
+
 const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const { toast } = useToast();
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,13 +60,63 @@ const Contact = () => {
     };
   }, []);
   
+  const sendEmailWithMailerSend = async (data: z.infer<typeof formSchema>) => {
+    const emailData = {
+      from: {
+        email: 'contact@shotcap.com',
+        name: 'ShotCap Contact Form'
+      },
+      to: [
+        {
+          email: RECIPIENT_EMAIL,
+          name: 'ShotCap Team'
+        }
+      ],
+      subject: `Contact Form: ${data.subject}`,
+      text: `Name: ${data.name}\nEmail: ${data.email}\n\nMessage: ${data.message}`,
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #4f46e5;">New Contact Form Submission</h2>
+          <p><strong>From:</strong> ${data.name} (${data.email})</p>
+          <p><strong>Subject:</strong> ${data.subject}</p>
+          <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 20px;">
+            <p><strong>Message:</strong></p>
+            <p>${data.message.replace(/\n/g, '<br>')}</p>
+          </div>
+          <p style="color: #666; font-size: 12px; margin-top: 30px;">This email was sent from the ShotCap website contact form.</p>
+        </div>
+      `
+    };
+
+    try {
+      const response = await fetch('https://api.mailersend.com/v1/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${MAILERSEND_API_KEY}`
+        },
+        body: JSON.stringify(emailData)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('MailerSend API error:', errorData);
+        throw new Error(errorData.message || 'Failed to send email');
+      }
+
+      return true;
+    } catch (error) {
+      console.error('Error sending email:', error);
+      throw error;
+    }
+  };
+  
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
+    setSubmitError(null);
     
-    // Simulating form submission
     try {
-      // In a real app, you would send the data to your backend
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await sendEmailWithMailerSend(data);
       
       form.reset();
       setIsSuccess(true);
@@ -77,6 +132,7 @@ const Contact = () => {
         setIsSuccess(false);
       }, 3000);
     } catch (error) {
+      setSubmitError(error instanceof Error ? error.message : 'Unknown error occurred');
       toast({
         title: "Error",
         description: "There was a problem sending your message. Please try again.",
@@ -153,6 +209,16 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="bg-github-card p-8 rounded-xl border border-github-border mb-10">
             <h3 className="text-xl font-semibold mb-6 text-center">Send us a Message</h3>
+            
+            {submitError && (
+              <div className="mb-6 p-4 border border-red-300 bg-red-50/10 rounded-md flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
+                <div>
+                  <p className="text-red-500 font-medium">Failed to send message</p>
+                  <p className="text-red-400 text-sm">{submitError}</p>
+                </div>
+              </div>
+            )}
             
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
