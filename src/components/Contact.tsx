@@ -8,7 +8,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
+import { toast } from 'sonner';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Name must be at least 2 characters' }),
@@ -17,17 +18,11 @@ const formSchema = z.object({
   message: z.string().min(10, { message: 'Message must be at least 10 characters' }),
 });
 
-// Email credentials
-const EMAIL_USER = "aliwoodhasilpur@gmail.com";
-const EMAIL_PASS = "ifureayygmstzpna";
-const RECIPIENT_EMAIL = "nasirguestpost@gmail.com";
-
 const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const { toast } = useToast();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,6 +35,12 @@ const Contact = () => {
   });
   
   useEffect(() => {
+    // Initialize EmailJS with your Public Key
+    if (window.emailjs) {
+      window.emailjs.init("_MEtUe82K5jtpJSGz");
+      console.log("EmailJS initialized");
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -61,54 +62,24 @@ const Contact = () => {
     };
   }, []);
   
-  const sendEmailWithNodemailer = async (data: z.infer<typeof formSchema>) => {
+  const sendEmailWithEmailJS = async (data: z.infer<typeof formSchema>) => {
+    if (!window.emailjs) {
+      console.error("EmailJS not loaded");
+      throw new Error("Email service is not available");
+    }
+
     try {
-      // Rather than calling nodemailer directly from the frontend (which won't work),
-      // we'll simulate the call for now and assume a server endpoint would exist
-      console.log("Would send email with nodemailer:", {
-        from: EMAIL_USER,
-        to: RECIPIENT_EMAIL,
-        subject: `Contact Form: ${data.subject}`,
-        text: `Name: ${data.name}\nEmail: ${data.email}\n\nMessage: ${data.message}`,
-        html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2 style="color: #4f46e5;">New Contact Form Submission</h2>
-            <p><strong>From:</strong> ${data.name} (${data.email})</p>
-            <p><strong>Subject:</strong> ${data.subject}</p>
-            <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 20px;">
-              <p><strong>Message:</strong></p>
-              <p>${data.message.replace(/\n/g, '<br>')}</p>
-            </div>
-            <p style="color: #666; font-size: 12px; margin-top: 30px;">This email was sent from the ShotCap website contact form.</p>
-          </div>
-        `
+      const response = await window.emailjs.send("service_43un05n", "template_k34ftbx", {
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        message: data.message,
       });
       
-      // For demo purposes, let's create a simulated API call
-      // In a real app, you would have a server endpoint that uses nodemailer
-      const response = await fetch('https://api.example.com/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: EMAIL_USER,
-          to: RECIPIENT_EMAIL,
-          subject: `Contact Form: ${data.subject}`,
-          text: `Name: ${data.name}\nEmail: ${data.email}\n\nMessage: ${data.message}`,
-          name: data.name,
-          email: data.email,
-          message: data.message,
-        })
-      }).catch(() => {
-        // This is a fake endpoint, so let's simulate success
-        return { ok: true };
-      });
-
-      // Simulate success for demo purposes
-      return true;
+      console.log("EmailJS response:", response);
+      return response;
     } catch (error) {
-      console.error('Error sending email:', error);
+      console.error('Error sending email with EmailJS:', error);
       throw error;
     }
   };
@@ -118,15 +89,13 @@ const Contact = () => {
     setSubmitError(null);
     
     try {
-      await sendEmailWithNodemailer(data);
+      await sendEmailWithEmailJS(data);
       
       form.reset();
       setIsSuccess(true);
       
-      toast({
-        title: "Message sent",
-        description: "Thanks for contacting us. We'll get back to you soon!",
-        variant: "default",
+      toast("Message sent successfully! We'll get back to you soon.", {
+        icon: <Check className="h-4 w-4" />,
       });
       
       // Reset success state after a while
@@ -134,11 +103,10 @@ const Contact = () => {
         setIsSuccess(false);
       }, 3000);
     } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : 'Unknown error occurred');
-      toast({
-        title: "Error",
-        description: "There was a problem sending your message. Please try again.",
-        variant: "destructive",
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+      setSubmitError(errorMessage);
+      toast("Failed to send message. Please try again later.", {
+        icon: <AlertCircle className="h-4 w-4" />,
       });
     } finally {
       setIsSubmitting(false);
@@ -213,13 +181,11 @@ const Contact = () => {
             <h3 className="text-xl font-semibold mb-6 text-center">Send us a Message</h3>
             
             {submitError && (
-              <div className="mb-6 p-4 border border-red-300 bg-red-50/10 rounded-md flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" />
-                <div>
-                  <p className="text-red-500 font-medium">Failed to send message</p>
-                  <p className="text-red-400 text-sm">{submitError}</p>
-                </div>
-              </div>
+              <Alert variant="destructive" className="mb-6">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{submitError}</AlertDescription>
+              </Alert>
             )}
             
             <Form {...form}>

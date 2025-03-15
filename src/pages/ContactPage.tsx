@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Contact from '@/components/Contact';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from 'sonner';
 
 const ContactPage = () => {
   useEffect(() => {
@@ -16,7 +16,7 @@ const ContactPage = () => {
       <main className="pt-20">
         <Contact />
       </main>
-      <Toaster />
+      <Toaster position="top-right" />
     </div>
   );
 };
