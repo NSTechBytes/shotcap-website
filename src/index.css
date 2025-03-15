@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,7 +34,6 @@
     --input: 222 18% 21%;
     --ring: 216 87% 62%;
 
-    /* Add sidebar variables with solid background colors */
     --sidebar-background: 222 20% 7%;
     --sidebar-foreground: 210 16% 82%;
     --sidebar-primary: 216 87% 62%;
@@ -60,7 +58,6 @@
     @apply bg-github-dark text-github-text antialiased overflow-x-hidden font-poppins;
   }
 
-  /* Enhanced custom scrollbar */
   ::-webkit-scrollbar {
     @apply w-2.5;
   }
@@ -99,7 +96,6 @@
     @apply rounded-xl bg-github-card border border-github-border p-6 transition-all duration-300 hover:border-github-accent/50 hover:shadow-[0_0_15px_rgba(88,166,255,0.1)];
   }
   
-  /* Mobile menu item */
   .mobile-menu-item {
     @apply py-3 px-4 text-white hover:text-github-accent rounded-lg bg-github-card/50 hover:bg-github-card/80 border border-github-border/20 flex items-center justify-between text-base font-medium transition-all duration-300;
   }
@@ -118,7 +114,6 @@
     @apply bg-github-card/80 backdrop-blur-sm border border-github-border;
   }
   
-  /* Add animation for mobile menu */
   .animate-fade-in {
     animation: fadeIn 0.3s ease-in-out forwards;
   }
@@ -134,7 +129,6 @@
     }
   }
   
-  /* Mobile specific utility classes */
   .no-scrollbar {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -144,10 +138,19 @@
     display: none;
   }
   
-  /* Fix for mobile safari issues */
   @supports (-webkit-touch-callout: none) {
     .min-h-screen {
       min-height: -webkit-fill-available;
+    }
+  }
+  
+  .pt-header {
+    padding-top: 120px;
+  }
+  
+  @media (min-width: 640px) {
+    .pt-header {
+      padding-top: 80px;
     }
   }
 }
