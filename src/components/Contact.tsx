@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Mail, Github, Twitter, Check, AlertCircle } from 'lucide-react';
 import { z } from 'zod';
@@ -128,201 +127,223 @@ const Contact = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div 
           ref={contactRef} 
-          className="opacity-0 translate-y-8 transition-all duration-700 ease-out max-w-3xl mx-auto"
+          className="opacity-0 translate-y-8 transition-all duration-700 ease-out max-w-5xl mx-auto"
         >
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Contact Us</h2>
-            <p className="text-github-text/70 mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-github-accent to-github-accent/70 bg-clip-text text-transparent">Contact Us</h2>
+            <p className="text-github-text/70 max-w-2xl mx-auto">
               Have questions or feedback about ShotCap? We'd love to hear from you! 
               Reach out to us through any of the channels below or use the contact form.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8 mb-10">
-            <div className="flex flex-col items-center p-6 bg-github-card rounded-xl border border-github-border transition-all duration-300 hover:border-github-accent/50 hover:shadow-md">
-              <Mail className="w-10 h-10 text-github-accent mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Email</h3>
-              <p className="text-github-text/70 text-center mb-4">
-                Send us an email with your questions or feedback
-              </p>
-              <a 
-                href="mailto:contact@shotcap.com" 
-                className="text-github-accent hover:underline"
-              >
-                contact@shotcap.com
-              </a>
-            </div>
-            
-            <div className="flex flex-col items-center p-6 bg-github-card rounded-xl border border-github-border transition-all duration-300 hover:border-github-accent/50 hover:shadow-md">
-              <Github className="w-10 h-10 text-github-accent mb-4" />
-              <h3 className="text-xl font-semibold mb-2">GitHub</h3>
-              <p className="text-github-text/70 text-center mb-4">
-                Report issues or contribute to the project
-              </p>
-              <a 
-                href="https://github.com/shotcap" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-github-accent hover:underline"
-              >
-                github.com/shotcap
-              </a>
-            </div>
-            
-            <div className="flex flex-col items-center p-6 bg-github-card rounded-xl border border-github-border transition-all duration-300 hover:border-github-accent/50 hover:shadow-md">
-              <Twitter className="w-10 h-10 text-github-accent mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Twitter</h3>
-              <p className="text-github-text/70 text-center mb-4">
-                Follow us for updates and quick support
-              </p>
-              <a 
-                href="https://twitter.com/shotcapapp" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-github-accent hover:underline"
-              >
-                @shotcapapp
-              </a>
-            </div>
-          </div>
-          
-          {/* Contact Form */}
-          <div className="bg-github-card p-8 rounded-xl border border-github-border mb-10">
-            <h3 className="text-xl font-semibold mb-6 text-center">Send us a Message</h3>
-            
-            {submitError && (
-              <Alert variant="destructive" className="mb-6">
-                <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{submitError}</AlertDescription>
-              </Alert>
-            )}
-            
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-github-text">Name</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="Your name" 
-                            className="bg-github-dark border-github-border text-github-text" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-github-text">Email</FormLabel>
-                        <FormControl>
-                          <Input 
-                            placeholder="Your email" 
-                            type="email" 
-                            className="bg-github-dark border-github-border text-github-text" 
-                            {...field} 
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+          {/* Main content wrapper */}
+          <div className="grid md:grid-cols-12 gap-10">
+            {/* Left side: Contact cards and FAQ */}
+            <div className="md:col-span-5 space-y-8">
+              {/* Contact cards grid */}
+              <div className="space-y-4">
+                <div className="p-6 bg-github-card rounded-xl border border-github-border hover:border-github-accent/50 transition-all duration-300 hover:shadow-md group">
+                  <div className="flex items-start space-x-4">
+                    <div className="p-2 rounded-full bg-github-dark/50 group-hover:bg-github-accent/10">
+                      <Mail className="w-6 h-6 text-github-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-1">Email</h3>
+                      <p className="text-github-text/70 text-sm mb-2">Send us an email with your questions</p>
+                      <a 
+                        href="mailto:contact@shotcap.com" 
+                        className="text-github-accent hover:underline text-sm inline-flex items-center"
+                      >
+                        contact@shotcap.com
+                      </a>
+                    </div>
+                  </div>
                 </div>
                 
-                <FormField
-                  control={form.control}
-                  name="subject"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-github-text">Subject</FormLabel>
-                      <FormControl>
-                        <Input 
-                          placeholder="Message subject" 
-                          className="bg-github-dark border-github-border text-github-text" 
-                          {...field} 
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="p-6 bg-github-card rounded-xl border border-github-border hover:border-github-accent/50 transition-all duration-300 hover:shadow-md group">
+                  <div className="flex items-start space-x-4">
+                    <div className="p-2 rounded-full bg-github-dark/50 group-hover:bg-github-accent/10">
+                      <Github className="w-6 h-6 text-github-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-1">GitHub</h3>
+                      <p className="text-github-text/70 text-sm mb-2">Report issues or contribute</p>
+                      <a 
+                        href="https://github.com/shotcap" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-github-accent hover:underline text-sm inline-flex items-center"
+                      >
+                        github.com/shotcap
+                      </a>
+                    </div>
+                  </div>
+                </div>
                 
-                <FormField
-                  control={form.control}
-                  name="message"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-github-text">Message</FormLabel>
-                      <FormControl>
-                        <Textarea 
-                          placeholder="Your message" 
-                          className="bg-github-dark border-github-border text-github-text min-h-[150px]" 
-                          {...field} 
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                <div className="p-6 bg-github-card rounded-xl border border-github-border hover:border-github-accent/50 transition-all duration-300 hover:shadow-md group">
+                  <div className="flex items-start space-x-4">
+                    <div className="p-2 rounded-full bg-github-dark/50 group-hover:bg-github-accent/10">
+                      <Twitter className="w-6 h-6 text-github-accent" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold mb-1">Twitter</h3>
+                      <p className="text-github-text/70 text-sm mb-2">Follow us for updates</p>
+                      <a 
+                        href="https://twitter.com/shotcapapp" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-github-accent hover:underline text-sm inline-flex items-center"
+                      >
+                        @shotcapapp
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* FAQ section */}
+              <div className="bg-github-card p-6 rounded-xl border border-github-border">
+                <h3 className="text-lg font-semibold mb-4 border-b border-github-border pb-2">Frequently Asked Questions</h3>
                 
-                <Button 
-                  type="submit" 
-                  className="w-full bg-github-accent hover:bg-github-accent/90 text-white"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center">
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Sending...
-                    </span>
-                  ) : isSuccess ? (
-                    <span className="flex items-center">
-                      <Check className="w-4 h-4 mr-2" />
-                      Sent
-                    </span>
-                  ) : (
-                    "Send Message"
-                  )}
-                </Button>
-              </form>
-            </Form>
-          </div>
-          
-          <div className="bg-github-card p-8 rounded-xl border border-github-border">
-            <h3 className="text-xl font-semibold mb-6 text-center">Frequently Asked Questions</h3>
+                <div className="space-y-4 mt-4">
+                  <div className="space-y-1">
+                    <h4 className="font-medium text-github-text">Is ShotCap free to use?</h4>
+                    <p className="text-github-text/70 text-sm">Yes, ShotCap is completely free and open source.</p>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <h4 className="font-medium text-github-text">Can I use ShotCap commercially?</h4>
+                    <p className="text-github-text/70 text-sm">Absolutely! ShotCap is available under the MIT license.</p>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <h4 className="font-medium text-github-text">Is ShotCap available for macOS/Linux?</h4>
+                    <p className="text-github-text/70 text-sm">Currently, ShotCap is Windows-only. We may consider other platforms in the future.</p>
+                  </div>
+                  
+                  <div className="space-y-1">
+                    <h4 className="font-medium text-github-text">How can I contribute?</h4>
+                    <p className="text-github-text/70 text-sm">Check out our GitHub repository and the Contribute page.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
             
-            <div className="space-y-6">
-              <div>
-                <h4 className="text-lg font-medium mb-2">Is ShotCap free to use?</h4>
-                <p className="text-github-text/70">Yes, ShotCap is completely free and open source. You can download and use it without any charges.</p>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-medium mb-2">Can I use ShotCap commercially?</h4>
-                <p className="text-github-text/70">Absolutely! ShotCap is available under the MIT license, which allows for commercial use.</p>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-medium mb-2">Is ShotCap available for macOS or Linux?</h4>
-                <p className="text-github-text/70">Currently, ShotCap is Windows-only. We may consider other platforms in the future based on community interest.</p>
-              </div>
-              
-              <div>
-                <h4 className="text-lg font-medium mb-2">How can I contribute to ShotCap?</h4>
-                <p className="text-github-text/70">Check out our GitHub repository and the Contribute page for ways to help improve ShotCap.</p>
+            {/* Right side: Contact Form */}
+            <div className="md:col-span-7">
+              <div className="bg-github-card p-8 rounded-xl border border-github-border shadow-sm">
+                <h3 className="text-xl font-semibold mb-6 text-center bg-gradient-to-r from-github-accent to-github-accent/70 bg-clip-text text-transparent">Send us a Message</h3>
+                
+                {submitError && (
+                  <Alert variant="destructive" className="mb-6">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>Error</AlertTitle>
+                    <AlertDescription>{submitError}</AlertDescription>
+                  </Alert>
+                )}
+                
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <FormField
+                        control={form.control}
+                        name="name"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-github-text text-sm">Name</FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="Your name" 
+                                className="bg-github-dark border-github-border text-github-text focus-visible:ring-github-accent/50" 
+                                {...field} 
+                              />
+                            </FormControl>
+                            <FormMessage className="text-xs" />
+                          </FormItem>
+                        )}
+                      />
+                      
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-github-text text-sm">Email</FormLabel>
+                            <FormControl>
+                              <Input 
+                                placeholder="Your email" 
+                                type="email" 
+                                className="bg-github-dark border-github-border text-github-text focus-visible:ring-github-accent/50" 
+                                {...field} 
+                              />
+                            </FormControl>
+                            <FormMessage className="text-xs" />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                    
+                    <FormField
+                      control={form.control}
+                      name="subject"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-github-text text-sm">Subject</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="Message subject" 
+                              className="bg-github-dark border-github-border text-github-text focus-visible:ring-github-accent/50" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="message"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-github-text text-sm">Message</FormLabel>
+                          <FormControl>
+                            <Textarea 
+                              placeholder="Your message" 
+                              className="bg-github-dark border-github-border text-github-text min-h-[150px] focus-visible:ring-github-accent/50" 
+                              {...field} 
+                            />
+                          </FormControl>
+                          <FormMessage className="text-xs" />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-github-accent hover:bg-github-accent/90 text-white"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <span className="flex items-center">
+                          <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending...
+                        </span>
+                      ) : isSuccess ? (
+                        <span className="flex items-center">
+                          <Check className="w-4 h-4 mr-2" />
+                          Sent
+                        </span>
+                      ) : (
+                        "Send Message"
+                      )}
+                    </Button>
+                  </form>
+                </Form>
               </div>
             </div>
           </div>
