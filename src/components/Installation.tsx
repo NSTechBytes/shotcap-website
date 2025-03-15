@@ -107,7 +107,7 @@ const Installation = () => {
                 onClick={handleDownload}
               >
                 <DownloadCloud className="w-5 h-5 mr-2" />
-                Download ShotCap.exe (64-bit)
+                Download ShotCap.exe
               </a>
               <div className="code-block mb-2 bg-github-dark rounded-lg p-3 overflow-x-auto transition-all duration-300 hover:bg-github-dark/90">
                 <code className="text-white font-mono text-sm">{`> ShotCap.exe --help`}</code>

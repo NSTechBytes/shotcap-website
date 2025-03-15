@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, Github, Twitter, Check, AlertCircle } from 'lucide-react';
+import { Mail, Github, Twitter, Check, AlertCircle, Youtube } from 'lucide-react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -184,7 +184,7 @@ const Contact = () => {
                 <div className="p-6 bg-github-card rounded-xl border border-github-border hover:border-github-accent/50 transition-all duration-300 hover:shadow-md group">
                   <div className="flex items-start space-x-4">
                     <div className="p-2 rounded-full bg-github-dark/50 group-hover:bg-github-accent/10">
-                      <Twitter className="w-6 h-6 text-github-accent" />
+                      <Youtube className="w-6 h-6 text-github-accent" />
                     </div>
                     <div>
                       <h3 className="text-lg font-semibold mb-1">Youtube</h3>
