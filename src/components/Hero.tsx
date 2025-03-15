@@ -4,11 +4,13 @@ import { Link } from 'react-router-dom';
 import { ArrowDown, Star, GitFork, Monitor, Command, Download, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import DownloadDialog from './DownloadDialog';
+import { getTotalDownloads, incrementDownloadCount } from '@/services/downloadService';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
-  const [totalDownloads, setTotalDownloads] = useState(12548); // Starting with a dummy value
+  const [totalDownloads, setTotalDownloads] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -25,6 +27,21 @@ const Hero = () => {
       observer.observe(heroRef.current);
     }
 
+    // Fetch download count when component mounts
+    const fetchDownloadCount = async () => {
+      try {
+        setIsLoading(true);
+        const count = await getTotalDownloads();
+        setTotalDownloads(count);
+      } catch (error) {
+        console.error("Failed to fetch download count:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDownloadCount();
+
     return () => {
       if (heroRef.current) {
         observer.unobserve(heroRef.current);
@@ -32,17 +49,21 @@ const Hero = () => {
     };
   }, []);
 
-  const handleDownload = (e: React.MouseEvent) => {
+  const handleDownload = async (e: React.MouseEvent) => {
     e.preventDefault();
     setDownloadDialogOpen(true);
-    // In a real app, we would increment the download count in the database
-    setTotalDownloads(prev => prev + 1);
+    
+    try {
+      // Increment the download count and update state
+      const updatedCount = await incrementDownloadCount();
+      setTotalDownloads(updatedCount);
+    } catch (error) {
+      console.error("Failed to increment download count:", error);
+    }
   };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
-      {/* Remove background elements as they're now in the Index.tsx */}
-      
       {/* Animated floating dots */}
       <div className="absolute inset-0 overflow-hidden opacity-25 pointer-events-none">
         {[...Array(20)].map((_, i) => (
@@ -112,7 +133,13 @@ const Hero = () => {
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-github-card/50 border border-github-border">
             <Download className="w-4 h-4 mr-2 text-github-accent" />
             <span className="text-sm font-medium">
-              <span className="text-github-accent font-bold">{totalDownloads.toLocaleString()}</span> total downloads
+              {isLoading ? (
+                <span>Loading downloads...</span>
+              ) : (
+                <>
+                  <span className="text-github-accent font-bold">{totalDownloads.toLocaleString()}</span> total downloads
+                </>
+              )}
             </span>
           </div>
         </div>

@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Download, CheckCircle } from 'lucide-react';
+import { incrementDownloadCount } from '@/services/downloadService';
 
 interface DownloadDialogProps {
   open: boolean;
@@ -17,6 +18,19 @@ interface DownloadDialogProps {
 }
 
 const DownloadDialog: React.FC<DownloadDialogProps> = ({ open, onOpenChange }) => {
+  const handleDownloadAgain = async () => {
+    try {
+      // Increment download count when "Download Again" is clicked
+      await incrementDownloadCount();
+      console.log('Manual download clicked and count incremented');
+      
+      // In a real implementation, you would redirect to the download file
+      // window.location.href = '/download/ShotCap.exe';
+    } catch (error) {
+      console.error("Failed to increment download count:", error);
+    }
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
@@ -38,12 +52,7 @@ const DownloadDialog: React.FC<DownloadDialogProps> = ({ open, onOpenChange }) =
         </div>
         <DialogFooter className="flex flex-col sm:flex-row sm:justify-center gap-2">
           <Button
-            onClick={() => {
-              // Handle direct download here
-              console.log('Manual download clicked');
-              // In a real implementation, you would redirect to the download file
-              // window.location.href = '/download/ShotCap.exe';
-            }}
+            onClick={handleDownloadAgain}
             className="w-full sm:w-auto"
           >
             <Download className="mr-2 h-4 w-4" />

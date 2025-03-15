@@ -4,6 +4,7 @@ import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings, Github, Code
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import DownloadDialog from './DownloadDialog';
+import { incrementDownloadCount } from '@/services/downloadService';
 
 const Installation = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -35,11 +36,17 @@ const Installation = () => {
     };
   }, []);
 
-  const handleDownload = (e: React.MouseEvent) => {
+  const handleDownload = async (e: React.MouseEvent) => {
     e.preventDefault();
     setDownloadDialogOpen(true);
-    // In a real implementation, you might also start the actual download here
-    console.log('Download initiated');
+    
+    try {
+      // Increment download count when download is initiated
+      await incrementDownloadCount();
+      console.log('Download initiated and count incremented');
+    } catch (error) {
+      console.error("Failed to increment download count:", error);
+    }
   };
 
   return (
