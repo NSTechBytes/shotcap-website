@@ -68,7 +68,7 @@ const Header = () => {
           <Link to="/" className="flex items-center space-x-2 group">
             <div className="h-8 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
               <img 
-                src="/lovable-uploads/26e373c8-66d4-41af-9c66-fde4e5bce6b1.png" 
+                src="/ShotCap.png" 
                 alt="ShotCap Logo" 
                 className="h-8 object-contain" 
               />

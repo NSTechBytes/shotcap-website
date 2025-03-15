@@ -147,7 +147,7 @@ const Hero = () => {
         {/* Version label added below the downloads counter */}
         <div className="mb-8 animate-slide-up" style={{animationDelay: '650ms'}}>
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-github-card/30 border border-github-border text-xs font-medium">
-            <span>Version <span className="text-github-accent">1.2.3</span></span>
+            <span>Version <span className="text-github-accent">1.0.0</span></span>
           </div>
         </div>
         
