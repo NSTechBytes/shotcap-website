@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Camera, Github, ExternalLink, Menu, X } from 'lucide-react';
+import { Github, ExternalLink, Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   Drawer,
@@ -66,8 +66,12 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-github-accent to-github-accent/70 flex items-center justify-center transition-all duration-300 group-hover:rotate-6 shadow-md group-hover:shadow-github-accent/20">
-              <Camera className="w-5 h-5 text-white" />
+            <div className="h-8 flex items-center justify-center transition-all duration-300 group-hover:scale-105">
+              <img 
+                src="/lovable-uploads/26e373c8-66d4-41af-9c66-fde4e5bce6b1.png" 
+                alt="ShotCap Logo" 
+                className="h-8 object-contain" 
+              />
             </div>
             <span className="text-xl font-semibold tracking-tight text-white transition-colors duration-300 group-hover:text-github-accent">ShotCap</span>
           </Link>

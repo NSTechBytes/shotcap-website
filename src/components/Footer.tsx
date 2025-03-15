@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Github, Twitter, Heart, Camera } from 'lucide-react';
+import { Github, Twitter, Heart } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -9,7 +9,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              <Camera className="w-6 h-6 text-github-accent mr-2" />
+              <img 
+                src="/lovable-uploads/26e373c8-66d4-41af-9c66-fde4e5bce6b1.png" 
+                alt="ShotCap Logo" 
+                className="h-6 mr-2" 
+              />
               <span className="text-xl font-semibold tracking-tight text-white">ShotCap</span>
             </div>
             <p className="text-github-text/70 text-sm max-w-md mb-6">
