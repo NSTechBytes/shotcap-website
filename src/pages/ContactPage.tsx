@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Contact from '@/components/Contact';
-import { Toaster } from 'sonner';
+import { Toaster } from '@/components/ui/sonner';
 
 const ContactPage = () => {
   useEffect(() => {

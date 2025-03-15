@@ -94,7 +94,7 @@ const Contact = () => {
       form.reset();
       setIsSuccess(true);
       
-      // Show toast notification only
+      // Use only sonner toast
       toast("Message sent successfully! We'll get back to you soon.", {
         icon: <Check className="h-4 w-4" />,
       });
