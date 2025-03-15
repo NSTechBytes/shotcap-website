@@ -18,6 +18,11 @@ const formSchema = z.object({
   message: z.string().min(10, { message: 'Message must be at least 10 characters' }),
 });
 
+// Get environment variables with fallbacks for development
+const EMAILJS_USER_ID = import.meta.env.VITE_EMAILJS_USER_ID || "_MEtUe82K5jtpJSGz";
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_43un05n";
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_k34ftbx";
+
 const Contact = () => {
   const contactRef = useRef<HTMLDivElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -37,7 +42,7 @@ const Contact = () => {
   useEffect(() => {
     // Initialize EmailJS with your Public Key
     if (window.emailjs) {
-      window.emailjs.init("_MEtUe82K5jtpJSGz");
+      window.emailjs.init(EMAILJS_USER_ID);
       console.log("EmailJS initialized");
     }
 
@@ -69,12 +74,16 @@ const Contact = () => {
     }
 
     try {
-      const response = await window.emailjs.send("service_43un05n", "template_k34ftbx", {
-        name: data.name,
-        email: data.email,
-        subject: data.subject,
-        message: data.message,
-      });
+      const response = await window.emailjs.send(
+        EMAILJS_SERVICE_ID, 
+        EMAILJS_TEMPLATE_ID, 
+        {
+          name: data.name,
+          email: data.email,
+          subject: data.subject,
+          message: data.message,
+        }
+      );
       
       console.log("EmailJS response:", response);
       return response;
