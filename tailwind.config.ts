@@ -81,7 +81,8 @@ export default {
 			fontFamily: {
 				sans: ['Inter', 'system-ui', 'sans-serif'],
 				mono: ['JetBrains Mono', 'Menlo', 'monospace'],
-				poppins: ['Poppins', 'sans-serif']
+				poppins: ['Poppins', 'sans-serif'],
+				varela: ['Varela Round', 'system-ui', 'sans-serif']
 			},
 			keyframes: {
 				'accordion-down': {

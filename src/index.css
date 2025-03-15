@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Varela+Round&display=swap');
 
 @layer base {
   :root {
@@ -51,11 +51,11 @@
   }
 
   html {
-    @apply scroll-smooth antialiased font-poppins;
+    @apply scroll-smooth antialiased font-varela;
   }
   
   body {
-    @apply bg-github-dark text-github-text antialiased overflow-x-hidden font-poppins;
+    @apply bg-github-dark text-github-text antialiased overflow-x-hidden font-varela;
   }
 
   ::-webkit-scrollbar {

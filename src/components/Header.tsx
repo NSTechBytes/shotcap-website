@@ -55,7 +55,7 @@ const Header = () => {
   return (
     <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out font-poppins',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out font-varela',
         isScrolled
           ? 'py-2 sm:py-3 bg-github-dark/90 backdrop-blur-md border border-github-border/50 mx-2 sm:mx-4 mt-2 rounded-xl shadow-lg'
           : isHomePage 
