@@ -1,12 +1,14 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings, Github, Code, ExternalLink, FileCode } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import DownloadDialog from './DownloadDialog';
 
 const Installation = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const buildSectionRef = useRef<HTMLDivElement>(null);
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
 
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
@@ -32,6 +34,13 @@ const Installation = () => {
       observer.disconnect();
     };
   }, []);
+
+  const handleDownload = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setDownloadDialogOpen(true);
+    // In a real implementation, you might also start the actual download here
+    console.log('Download initiated');
+  };
 
   return (
     <section 
@@ -88,6 +97,7 @@ const Installation = () => {
               <a 
                 href="#download" 
                 className="inline-flex items-center text-github-accent hover:text-github-accent/90 mb-4 transition-colors"
+                onClick={handleDownload}
               >
                 <DownloadCloud className="w-5 h-5 mr-2" />
                 Download ShotCap.exe (64-bit)
@@ -189,6 +199,7 @@ const Installation = () => {
             <div className="grid grid-cols-1 gap-4">
               <a 
                 href="#" 
+                onClick={handleDownload}
                 className="p-4 bg-github-dark rounded-lg border border-github-border hover:border-github-accent/70 transition-all duration-300 hover:scale-105 flex flex-col items-center text-center"
               >
                 <DownloadCloud className="w-6 h-6 text-github-accent mb-2" />
@@ -209,6 +220,12 @@ const Installation = () => {
           </div>
         </div>
       </div>
+
+      {/* Download Dialog */}
+      <DownloadDialog 
+        open={downloadDialogOpen} 
+        onOpenChange={setDownloadDialogOpen} 
+      />
     </section>
   );
 };

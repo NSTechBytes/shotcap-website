@@ -1,11 +1,12 @@
-
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowDown, Star, GitFork, Monitor, Command, Download, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import DownloadDialog from './DownloadDialog';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
+  const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,6 +29,11 @@ const Hero = () => {
       }
     };
   }, []);
+
+  const handleDownload = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setDownloadDialogOpen(true);
+  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
@@ -71,14 +77,17 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{animationDelay: '450ms'}}>
-          <Link to="/installation" className="group relative w-full sm:w-auto overflow-hidden rounded-xl bg-github-accent px-6 py-3 text-white transition-all duration-300 hover:bg-github-accent/90 hover:scale-105 active:scale-100">
+          <button
+            onClick={handleDownload}
+            className="group relative w-full sm:w-auto overflow-hidden rounded-xl bg-github-accent px-6 py-3 text-white transition-all duration-300 hover:bg-github-accent/90 hover:scale-105 active:scale-100"
+          >
             <div className="relative flex items-center justify-center gap-2">
               <Download className="w-5 h-5" />
               <span className="font-medium">Download for Windows</span>
               <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </div>
             <div className="absolute inset-0 -translate-y-full bg-gradient-to-r from-white/10 to-transparent opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"></div>
-          </Link>
+          </button>
 
           <div className="flex items-center gap-2">
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
@@ -111,6 +120,12 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Download Dialog */}
+      <DownloadDialog 
+        open={downloadDialogOpen} 
+        onOpenChange={setDownloadDialogOpen} 
+      />
     </section>
   );
 };
