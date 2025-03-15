@@ -94,11 +94,12 @@ const Contact = () => {
       form.reset();
       setIsSuccess(true);
       
+      // Show toast notification only
       toast("Message sent successfully! We'll get back to you soon.", {
         icon: <Check className="h-4 w-4" />,
       });
       
-      // Reset success state after a while
+      // Reset success state after a while to clear the button state
       setTimeout(() => {
         setIsSuccess(false);
       }, 3000);
@@ -281,7 +282,7 @@ const Contact = () => {
                   ) : isSuccess ? (
                     <span className="flex items-center">
                       <Check className="w-4 h-4 mr-2" />
-                      Sent Successfully
+                      Sent
                     </span>
                   ) : (
                     "Send Message"
