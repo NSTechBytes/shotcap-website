@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings, Github, Code, ExternalLink, FileCode } from 'lucide-react';
+import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings, Github, Code, ExternalLink, FileCode,Youtube } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import DownloadDialog from './DownloadDialog';
@@ -137,7 +137,7 @@ const Installation = () => {
                   </p>
                   <div className="flex flex-wrap gap-3">
                     <a 
-                      href="https://github.com/shotcap" 
+                      href="https://github.com/NSTechBytes/ShotCap" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2 bg-github-dark rounded-lg border border-github-border hover:bg-github-dark/80 hover:border-github-accent/50 transition-all duration-300"
