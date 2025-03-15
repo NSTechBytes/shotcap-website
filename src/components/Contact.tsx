@@ -152,10 +152,10 @@ const Contact = () => {
                       <h3 className="text-lg font-semibold mb-1">Email</h3>
                       <p className="text-github-text/70 text-sm mb-2">Send us an email with your questions</p>
                       <a 
-                        href="mailto:contact@shotcap.com" 
+                        href="mailto:nstechbytes@gmail.com" 
                         className="text-github-accent hover:underline text-sm inline-flex items-center"
                       >
-                        contact@shotcap.com
+                        nstechbytes@gmail.com
                       </a>
                     </div>
                   </div>
@@ -170,12 +170,12 @@ const Contact = () => {
                       <h3 className="text-lg font-semibold mb-1">GitHub</h3>
                       <p className="text-github-text/70 text-sm mb-2">Report issues or contribute</p>
                       <a 
-                        href="https://github.com/shotcap" 
+                        href="https://github.com/NSTechBytes/ShotCap" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="text-github-accent hover:underline text-sm inline-flex items-center"
                       >
-                        github.com/shotcap
+                        github.com/ShotCap
                       </a>
                     </div>
                   </div>
@@ -187,15 +187,15 @@ const Contact = () => {
                       <Twitter className="w-6 h-6 text-github-accent" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold mb-1">Twitter</h3>
-                      <p className="text-github-text/70 text-sm mb-2">Follow us for updates</p>
+                      <h3 className="text-lg font-semibold mb-1">Youtube</h3>
+                      <p className="text-github-text/70 text-sm mb-2">Subscribe us for updates</p>
                       <a 
-                        href="https://twitter.com/shotcapapp" 
+                        href="https://youtube.com/@nstechbytes" 
                         target="_blank" 
                         rel="noopener noreferrer" 
                         className="text-github-accent hover:underline text-sm inline-flex items-center"
                       >
-                        @shotcapapp
+                        @nstechbytes
                       </a>
                     </div>
                   </div>
