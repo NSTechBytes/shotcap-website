@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowDown, Star, GitFork, Monitor, Command, Download, ChevronRight } from 'lucide-react';
@@ -7,6 +8,7 @@ import DownloadDialog from './DownloadDialog';
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
+  const [totalDownloads, setTotalDownloads] = useState(12548); // Starting with a dummy value
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,6 +35,8 @@ const Hero = () => {
   const handleDownload = (e: React.MouseEvent) => {
     e.preventDefault();
     setDownloadDialogOpen(true);
+    // In a real app, we would increment the download count in the database
+    setTotalDownloads(prev => prev + 1);
   };
 
   return (
@@ -100,6 +104,16 @@ const Hero = () => {
               <GitFork className="w-5 h-5" />
               <span>Fork</span>
             </a>
+          </div>
+        </div>
+        
+        {/* Downloads counter */}
+        <div className="mb-8 animate-slide-up" style={{animationDelay: '600ms'}}>
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-github-card/50 border border-github-border">
+            <Download className="w-4 h-4 mr-2 text-github-accent" />
+            <span className="text-sm font-medium">
+              <span className="text-github-accent font-bold">{totalDownloads.toLocaleString()}</span> total downloads
+            </span>
           </div>
         </div>
         
