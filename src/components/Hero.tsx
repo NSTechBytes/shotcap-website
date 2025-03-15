@@ -108,12 +108,19 @@ const Hero = () => {
         </div>
         
         {/* Downloads counter */}
-        <div className="mb-8 animate-slide-up" style={{animationDelay: '600ms'}}>
+        <div className="mb-2 animate-slide-up" style={{animationDelay: '600ms'}}>
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-github-card/50 border border-github-border">
             <Download className="w-4 h-4 mr-2 text-github-accent" />
             <span className="text-sm font-medium">
               <span className="text-github-accent font-bold">{totalDownloads.toLocaleString()}</span> total downloads
             </span>
+          </div>
+        </div>
+        
+        {/* Version label added below the downloads counter */}
+        <div className="mb-8 animate-slide-up" style={{animationDelay: '650ms'}}>
+          <div className="inline-flex items-center px-3 py-1 rounded-full bg-github-card/30 border border-github-border text-xs font-medium">
+            <span>Version <span className="text-github-accent">1.2.3</span></span>
           </div>
         </div>
         
