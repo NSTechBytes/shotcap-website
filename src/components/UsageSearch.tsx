@@ -68,8 +68,8 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
     }
   }, [open]);
 
+  // Update search results immediately as user types
   useEffect(() => {
-    // Filter examples based on search query
     if (!searchQuery.trim()) {
       // Show all results if search query is empty
       const allResults = usageExamples.map((example, index) => ({
@@ -111,6 +111,10 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
     }, 100);
   };
 
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+  };
+
   return (
     <>
       <button
@@ -133,7 +137,7 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
                 ref={inputRef}
                 placeholder="Search for commands..."
                 value={searchQuery}
-                onValueChange={setSearchQuery}
+                onValueChange={handleSearchChange}
                 className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base"
               />
               {searchQuery && (
