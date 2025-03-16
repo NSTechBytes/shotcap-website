@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Github, ExternalLink, Menu, X } from 'lucide-react';
@@ -50,6 +49,9 @@ const Header = () => {
     setIsOpen(false);
   };
 
+  // GitHub repository URL
+  const githubRepoUrl = "https://github.com/nstechbytes/shotcap";
+
   const isHomePage = location.pathname === '/';
 
   return (
@@ -85,7 +87,7 @@ const Header = () => {
             <Link to="/contribute" className={cn("nav-link text-sm px-3", isActive('/contribute') && "text-github-accent font-medium")}>Contribute</Link>
             <Link to="/contact" className={cn("nav-link text-sm px-3", isActive('/contact') && "text-github-accent font-medium")}>Contact</Link>
             <a 
-              href="https://github.com" 
+              href={githubRepoUrl}
               target="_blank" 
               rel="noopener noreferrer" 
               className="ml-2 inline-flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-all duration-300 text-white hover:bg-github-card hover:text-github-accent hover:scale-105"
@@ -134,7 +136,7 @@ const Header = () => {
                       Contact
                     </Link>
                     <a 
-                      href="https://github.com" 
+                      href={githubRepoUrl}
                       target="_blank" 
                       rel="noopener noreferrer" 
                       className="mobile-menu-item"

@@ -1,7 +1,11 @@
+
 import React from "react";
 import { Github, FileCode, Bug, Heart, Code } from "lucide-react";
 
 const Contribute = () => {
+  // GitHub repository URL
+  const githubRepoUrl = "https://github.com/nstechbytes/shotcap";
+
   return (
     <section
       id="contribute"
@@ -27,7 +31,7 @@ const Contribute = () => {
               capture methods, add new features, or improve performance.
             </p>
             <a
-              href="https://github.com"
+              href={`${githubRepoUrl}/blob/main/CONTRIBUTING.md`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-github-accent hover:text-github-accent/80 inline-flex items-center"
@@ -59,7 +63,7 @@ const Contribute = () => {
               help us improve ShotCap.
             </p>
             <a
-              href="https://github.com"
+              href={`${githubRepoUrl}/issues/new`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-github-accent hover:text-github-accent/80 inline-flex items-center"
@@ -91,7 +95,7 @@ const Contribute = () => {
               ShotCap more accessible to everyone.
             </p>
             <a
-              href="https://github.com"
+              href={`${githubRepoUrl}/blob/main/docs`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-github-accent hover:text-github-accent/80 inline-flex items-center"
@@ -123,7 +127,7 @@ const Contribute = () => {
               to help the project grow.
             </p>
             <a
-              href="https://github.com"
+              href={githubRepoUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn-primary inline-flex items-center"
