@@ -5,12 +5,15 @@ import { ArrowDown, Star, GitFork, Monitor, Command, Download, ChevronRight } fr
 import { cn } from '@/lib/utils';
 import DownloadDialog from './DownloadDialog';
 import { getTotalDownloads, incrementDownloadCount } from '@/services/downloadService';
+import { getLatestRelease } from '@/services/githubService';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
   const [totalDownloads, setTotalDownloads] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [version, setVersion] = useState("1.0.0");
+  const [downloadUrl, setDownloadUrl] = useState("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,20 +30,39 @@ const Hero = () => {
       observer.observe(heroRef.current);
     }
 
-    // Fetch download count when component mounts
-    const fetchDownloadCount = async () => {
+    // Fetch download count and GitHub release info when component mounts
+    const fetchData = async () => {
       try {
         setIsLoading(true);
+        
+        // Fetch download count
         const count = await getTotalDownloads();
         setTotalDownloads(count);
+        
+        // Fetch latest release info from GitHub
+        const releaseInfo = await getLatestRelease();
+        if (releaseInfo) {
+          // Remove v prefix if present
+          const versionNumber = releaseInfo.tag_name.replace(/^v/, '');
+          setVersion(versionNumber);
+          
+          // Get download URL for ShotCap.exe
+          const asset = releaseInfo.assets.find(asset => asset.name === "ShotCap.exe");
+          if (asset) {
+            setDownloadUrl(asset.browser_download_url);
+          } else {
+            // Fallback URL
+            setDownloadUrl("https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe");
+          }
+        }
       } catch (error) {
-        console.error("Failed to fetch download count:", error);
+        console.error("Failed to fetch data:", error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchDownloadCount();
+    fetchData();
 
     return () => {
       if (heroRef.current) {
@@ -102,7 +124,8 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up" style={{animationDelay: '450ms'}}>
-          <button
+          <a
+            href={downloadUrl || "https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe"}
             onClick={handleDownload}
             className="group relative w-full sm:w-auto overflow-hidden rounded-xl bg-github-accent px-6 py-3 text-white transition-all duration-300 hover:bg-github-accent/90 hover:scale-105 active:scale-100"
           >
@@ -112,15 +135,15 @@ const Hero = () => {
               <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </div>
             <div className="absolute inset-0 -translate-y-full bg-gradient-to-r from-white/10 to-transparent opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"></div>
-          </button>
+          </a>
 
           <div className="flex items-center gap-2">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
+            <a href="https://github.com/NSTechBytes/ShotCap" target="_blank" rel="noopener noreferrer" 
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-github-border bg-github-card hover:bg-github-card/80 transition-all duration-300">
               <Star className="w-5 h-5" />
               <span>Star</span>
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" 
+            <a href="https://github.com/NSTechBytes/ShotCap" target="_blank" rel="noopener noreferrer" 
               className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-github-border bg-github-card hover:bg-github-card/80 transition-all duration-300">
               <GitFork className="w-5 h-5" />
               <span>Fork</span>
@@ -144,10 +167,10 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* Version label added below the downloads counter */}
+        {/* Version label updated to use GitHub API data */}
         <div className="mb-8 animate-slide-up" style={{animationDelay: '650ms'}}>
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-github-card/30 border border-github-border text-xs font-medium">
-            <span>Version <span className="text-github-accent">1.0.0</span></span>
+            <span>Version <span className="text-github-accent">{version}</span></span>
           </div>
         </div>
         
@@ -169,10 +192,11 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Download Dialog */}
+      {/* Download Dialog - Pass the downloadUrl to the dialog */}
       <DownloadDialog 
         open={downloadDialogOpen} 
-        onOpenChange={setDownloadDialogOpen} 
+        onOpenChange={setDownloadDialogOpen}
+        downloadUrl={downloadUrl}
       />
     </section>
   );

@@ -1,70 +1,85 @@
 
 import React from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Download, CheckCircle } from 'lucide-react';
+import { Download, ExternalLink } from 'lucide-react';
 import { incrementDownloadCount } from '@/services/downloadService';
 
 interface DownloadDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  downloadUrl?: string;
 }
 
-const DownloadDialog: React.FC<DownloadDialogProps> = ({ open, onOpenChange }) => {
-  const handleDownloadAgain = async () => {
+const DownloadDialog = ({ open, onOpenChange, downloadUrl = "https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe" }: DownloadDialogProps) => {
+  const handleDownload = async () => {
     try {
-      // Increment download count when "Download Again" is clicked
+      // Increment the download count
       await incrementDownloadCount();
-      console.log('Manual download clicked and count incremented');
       
-      // In a real implementation, you would redirect to the download file
-      // window.location.href = '/download/ShotCap.exe';
+      // Trigger the download
+      window.location.href = downloadUrl;
+      
+      // Close the dialog after a short delay
+      setTimeout(() => {
+        onOpenChange(false);
+      }, 1000);
     } catch (error) {
-      console.error("Failed to increment download count:", error);
+      console.error("Error during download:", error);
     }
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-github-card border-github-border">
         <DialogHeader>
-          <div className="flex justify-center mb-4">
-            <CheckCircle className="h-12 w-12 text-github-accent" />
-          </div>
-          <DialogTitle className="text-center text-xl">Thanks for downloading ShotCap!</DialogTitle>
-          <DialogDescription className="text-center pt-2">
-            Your download is starting now. If it doesn't start automatically, 
-            click the download button below.
+          <DialogTitle className="text-xl font-semibold">Download ShotCap</DialogTitle>
+          <DialogDescription className="text-github-text/70">
+            You're downloading the latest version of ShotCap for Windows
           </DialogDescription>
         </DialogHeader>
+        
         <div className="flex flex-col space-y-4 py-4">
-          <p className="text-sm text-github-text/70 text-center">
-            ShotCap is an open-source project. If you find it useful, please consider 
-            starring our repository on GitHub to help others discover it.
-          </p>
+          <div className="bg-github-dark/50 p-4 rounded-lg">
+            <p className="text-sm text-github-text/80 mb-2">Make sure to:</p>
+            <ul className="list-disc pl-5 text-sm text-github-text/80 space-y-1">
+              <li>Run the executable as administrator for full functionality</li>
+              <li>Check the documentation for command usage</li>
+              <li>Consider adding the directory to your PATH for easier access</li>
+            </ul>
+          </div>
+          
+          <div className="bg-github-dark/50 p-4 rounded-lg">
+            <p className="text-sm text-github-text/80">
+              By downloading, you agree to the <a href="#" className="text-github-accent hover:underline">license terms</a>.
+            </p>
+          </div>
         </div>
-        <DialogFooter className="flex flex-col sm:flex-row sm:justify-center gap-2">
-          <Button
-            onClick={handleDownloadAgain}
-            className="w-full sm:w-auto"
+        
+        <DialogFooter className="flex flex-col sm:flex-row gap-3">
+          <Button 
+            variant="outline"
+            className="w-full sm:w-auto" 
+            onClick={() => onOpenChange(false)}
           >
-            <Download className="mr-2 h-4 w-4" />
-            Download Again
+            Cancel
           </Button>
           <Button 
-            variant="outline" 
-            onClick={() => onOpenChange(false)}
-            className="w-full sm:w-auto"
+            className="w-full sm:w-auto bg-github-accent hover:bg-github-accent/90 text-white gap-2"
+            onClick={handleDownload}
           >
-            Close
+            <Download className="w-4 h-4" />
+            Download Now
           </Button>
+          <a 
+            href="https://github.com/NSTechBytes/ShotCap/releases" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-xs text-github-text/60 hover:text-github-text flex items-center gap-1"
+          >
+            <ExternalLink className="w-3 h-3" />
+            All releases
+          </a>
         </DialogFooter>
       </DialogContent>
     </Dialog>

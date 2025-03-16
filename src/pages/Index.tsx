@@ -1,17 +1,38 @@
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import { getLatestRelease } from "@/services/githubService";
 
 export default function Index() {
+  const [version, setVersion] = useState("1.0.0");
+
   useEffect(() => {
-    document.title = "ShotCap - Windows Screenshot Command Line Tool";
+    // Fetch version information for page title
+    const fetchVersion = async () => {
+      try {
+        const releaseInfo = await getLatestRelease();
+        if (releaseInfo) {
+          // Remove v prefix if present
+          const versionNumber = releaseInfo.tag_name.replace(/^v/, '');
+          setVersion(versionNumber);
+        }
+      } catch (error) {
+        console.error("Failed to fetch version:", error);
+      }
+    };
+
+    fetchVersion();
+    
+    // Set document title with version
+    document.title = `ShotCap v${version} - Windows Screenshot Command Line Tool`;
+    
     // Ensure we start at the top of the page when it loads
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
-  }, []);
+  }, [version]);
 
   return (
     <div className="min-h-screen bg-github-dark text-github-text">

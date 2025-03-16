@@ -1,15 +1,27 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings, Github, Code, ExternalLink, FileCode,Youtube } from 'lucide-react';
+import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings, Github, Code, ExternalLink, FileCode, Youtube } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import DownloadDialog from './DownloadDialog';
 import { incrementDownloadCount } from '@/services/downloadService';
+import { getLatestRelease, formatFileSize, formatDate } from '@/services/githubService';
 
 const Installation = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const buildSectionRef = useRef<HTMLDivElement>(null);
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState("https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe");
+  const [releaseInfo, setReleaseInfo] = useState<{
+    version: string,
+    date: string,
+    fileSize: string,
+  }>({
+    version: "1.0.0",
+    date: "2023",
+    fileSize: "7.2 MB"
+  });
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[], observer: IntersectionObserver) => {
@@ -30,6 +42,35 @@ const Installation = () => {
     if (buildSectionRef.current) {
       observer.observe(buildSectionRef.current);
     }
+
+    // Fetch release info when component mounts
+    const fetchReleaseInfo = async () => {
+      try {
+        setIsLoading(true);
+        const release = await getLatestRelease();
+        
+        if (release) {
+          // Find ShotCap.exe asset
+          const shotCapAsset = release.assets.find(asset => asset.name === "ShotCap.exe");
+          
+          if (shotCapAsset) {
+            setDownloadUrl(shotCapAsset.browser_download_url);
+            
+            setReleaseInfo({
+              version: release.tag_name.replace(/^v/, ''),
+              date: formatDate(release.published_at),
+              fileSize: formatFileSize(shotCapAsset.size)
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Failed to fetch release info:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchReleaseInfo();
 
     return () => {
       observer.disconnect();
@@ -101,14 +142,23 @@ const Installation = () => {
                 Direct Portable Download
               </h4>
               <p className="mb-4">Download the portable executable file directly and use it without installation:</p>
-              <a 
-                href="#download" 
-                className="inline-flex items-center text-github-accent hover:text-github-accent/90 mb-4 transition-colors"
-                onClick={handleDownload}
-              >
-                <DownloadCloud className="w-5 h-5 mr-2" />
-                Download ShotCap.exe
-              </a>
+              
+              {isLoading ? (
+                <div className="flex items-center space-x-2 text-github-text/70 mb-4">
+                  <div className="animate-spin h-4 w-4 border-2 border-github-accent/50 rounded-full border-t-transparent"></div>
+                  <span>Fetching latest release...</span>
+                </div>
+              ) : (
+                <a 
+                  href="#download" 
+                  className="inline-flex items-center text-github-accent hover:text-github-accent/90 mb-4 transition-colors"
+                  onClick={handleDownload}
+                >
+                  <DownloadCloud className="w-5 h-5 mr-2" />
+                  Download ShotCap.exe ({releaseInfo.fileSize})
+                </a>
+              )}
+              
               <div className="code-block mb-2 bg-github-dark rounded-lg p-3 overflow-x-auto transition-all duration-300 hover:bg-github-dark/90">
                 <code className="text-white font-mono text-sm">{`> ShotCap.exe --help`}</code>
               </div>
@@ -146,7 +196,7 @@ const Installation = () => {
                       <span>GitHub Repository</span>
                     </a>
                     <a 
-                      href="#" 
+                      href="https://github.com/NSTechBytes/ShotCap/archive/refs/heads/main.zip" 
                       className="inline-flex items-center gap-2 px-4 py-2 bg-github-dark rounded-lg border border-github-border hover:bg-github-dark/80 hover:border-github-accent/50 transition-all duration-300"
                     >
                       <DownloadCloud className="w-5 h-5" />
@@ -166,7 +216,7 @@ const Installation = () => {
                     Clone the Repository
                   </h5>
                   <div className="bg-github-dark rounded-lg p-3 overflow-x-auto font-mono text-sm">
-                    <code className="text-white">git clone https://github.com/&lt;your-username&gt;/ShotCap.git</code>
+                    <code className="text-white">git clone https://github.com/NSTechBytes/ShotCap.git</code>
                   </div>
                 </li>
                 
@@ -204,15 +254,23 @@ const Installation = () => {
           <div id="download" className="mt-12 p-6 bg-gradient-to-r from-github-card to-github-card/80 rounded-xl border border-github-border transition-all duration-300 hover:shadow-lg hover:shadow-github-accent/10">
             <h3 className="text-xl font-semibold mb-4">Download Options</h3>
             <div className="grid grid-cols-1 gap-4">
-              <a 
-                href="#" 
-                onClick={handleDownload}
-                className="p-4 bg-github-dark rounded-lg border border-github-border hover:border-github-accent/70 transition-all duration-300 hover:scale-105 flex flex-col items-center text-center"
-              >
-                <DownloadCloud className="w-6 h-6 text-github-accent mb-2" />
-                <span className="font-medium">ShotCap.exe</span>
-                <span className="text-xs text-github-text/70 mt-1">Portable (7.2 MB)</span>
-              </a>
+              {isLoading ? (
+                <div className="p-4 bg-github-dark rounded-lg border border-github-border flex items-center justify-center">
+                  <div className="animate-spin h-5 w-5 border-2 border-github-accent/50 rounded-full border-t-transparent mr-3"></div>
+                  <span>Loading release information...</span>
+                </div>
+              ) : (
+                <a 
+                  href={downloadUrl} 
+                  onClick={handleDownload}
+                  className="p-4 bg-github-dark rounded-lg border border-github-border hover:border-github-accent/70 transition-all duration-300 hover:scale-105 flex flex-col items-center text-center"
+                >
+                  <DownloadCloud className="w-6 h-6 text-github-accent mb-2" />
+                  <span className="font-medium">ShotCap.exe</span>
+                  <span className="text-xs text-github-text/70 mt-1">Portable ({releaseInfo.fileSize})</span>
+                  <span className="text-xs text-github-text/70 mt-1">Released: {releaseInfo.date}</span>
+                </a>
+              )}
             </div>
             
             <div className="mt-6 text-sm text-github-text/70">
@@ -231,7 +289,8 @@ const Installation = () => {
       {/* Download Dialog */}
       <DownloadDialog 
         open={downloadDialogOpen} 
-        onOpenChange={setDownloadDialogOpen} 
+        onOpenChange={setDownloadDialogOpen}
+        downloadUrl={downloadUrl}
       />
     </section>
   );
