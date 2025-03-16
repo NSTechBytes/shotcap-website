@@ -21,6 +21,36 @@ const FallingText = ({ text, className }: FallingTextProps) => {
     setCharacters(chars);
   }, [text]);
 
+  // Create keyframes style for the animation
+  useEffect(() => {
+    // Check if the style already exists
+    if (!document.getElementById('falling-char-keyframes')) {
+      const styleElement = document.createElement('style');
+      styleElement.id = 'falling-char-keyframes';
+      styleElement.textContent = `
+        @keyframes falling-char {
+          0% {
+            opacity: 0;
+            transform: translateY(-20px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `;
+      document.head.appendChild(styleElement);
+    }
+    
+    // Cleanup on unmount
+    return () => {
+      const styleElement = document.getElementById('falling-char-keyframes');
+      if (styleElement && document.head.contains(styleElement)) {
+        document.head.removeChild(styleElement);
+      }
+    };
+  }, []);
+
   return (
     <div 
       className={cn("inline-flex", className)}
@@ -40,19 +70,6 @@ const FallingText = ({ text, className }: FallingTextProps) => {
           {item.char}
         </span>
       ))}
-      
-      <style jsx>{`
-        @keyframes falling-char {
-          0% {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 };
