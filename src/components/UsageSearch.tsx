@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import { Command, CommandInput, CommandList, CommandGroup, CommandItem } from '@/components/ui/command';
+import { Command, CommandInput, CommandList, CommandGroup, CommandItem, CommandEmpty } from '@/components/ui/command';
 
 interface SearchResult {
   title: string;
@@ -31,8 +31,15 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
     if (!open) {
       setSearchQuery('');
       setResults([]);
+    } else {
+      // When dialog opens, show all examples by default
+      const allResults = usageExamples.map((example, index) => ({
+        ...example,
+        id: index,
+      }));
+      setResults(allResults);
     }
-  }, [open]);
+  }, [open, usageExamples]);
 
   useEffect(() => {
     // Add keyboard shortcut for search (Ctrl+K or Cmd+K)
@@ -62,12 +69,17 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
   }, [open]);
 
   useEffect(() => {
+    // Filter examples based on search query
     if (!searchQuery.trim()) {
-      setResults([]);
+      // Show all results if search query is empty
+      const allResults = usageExamples.map((example, index) => ({
+        ...example,
+        id: index,
+      }));
+      setResults(allResults);
       return;
     }
 
-    // Filter examples based on search query
     const filtered = usageExamples
       .map((example, index) => ({
         ...example,
@@ -103,66 +115,62 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-github-card/80 border border-github-border text-github-text/70 hover:text-github-text transition-colors"
+        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-github-card/80 border border-github-border text-github-text/70 hover:text-github-text transition-colors w-full"
       >
         <Search className="w-4 h-4" />
-        <span>Search commands...</span>
-        <span className="text-xs border border-github-border rounded px-1.5 py-0.5 ml-auto opacity-70">
+        <span className="text-left flex-1">Search commands...</span>
+        <span className="text-xs border border-github-border rounded px-1.5 py-0.5 opacity-70">
           Ctrl K
         </span>
       </button>
       
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="p-0 gap-0 border-github-border bg-github-card max-w-2xl">
+        <DialogContent className="p-0 gap-0 border-github-border bg-github-card max-w-3xl mx-auto">
           <Command className="rounded-lg">
-            <div className="flex items-center border-b border-github-border p-2">
-              <Search className="w-4 h-4 mr-2 shrink-0 text-github-text/40" />
+            <div className="flex items-center border-b border-github-border p-3">
+              <Search className="w-5 h-5 mr-2 shrink-0 text-github-text/40" />
               <CommandInput
                 ref={inputRef}
                 placeholder="Search for commands..."
                 value={searchQuery}
                 onValueChange={setSearchQuery}
-                className="flex-1 outline-none border-0 focus:ring-0 text-github-text"
+                className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base"
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="p-1">
-                  <X className="w-4 h-4 text-github-text/40" />
+                <button onClick={() => setSearchQuery('')} className="p-1 hover:bg-github-dark/20 rounded">
+                  <X className="w-4 h-4 text-github-text/60 hover:text-github-text" />
                 </button>
               )}
             </div>
             
-            <CommandList className="max-h-[60vh] overflow-y-auto">
-              {searchQuery && results.length === 0 && (
-                <div className="px-4 py-8 text-center text-github-text/60">
-                  No results found for "{searchQuery}"
-                </div>
-              )}
+            <CommandList className="max-h-[70vh] overflow-y-auto py-2">
+              <CommandEmpty className="py-6 text-center text-github-text/60">
+                No results found for "{searchQuery}"
+              </CommandEmpty>
               
               {results.length > 0 && (
-                <CommandGroup heading="Commands">
+                <CommandGroup heading="Commands" className="px-2">
                   {results.map((result) => (
                     <CommandItem
                       key={result.id}
                       onSelect={() => handleSelectResult(result.id)}
-                      className="cursor-pointer px-4 py-3 hover:bg-github-dark/20"
+                      className="cursor-pointer px-4 py-3 hover:bg-github-dark/20 rounded-md mb-1 transition-colors"
                     >
-                      <div className="flex flex-col gap-1">
-                        <div className="font-medium text-github-text">{result.title}</div>
-                        <div className="text-xs text-github-text/70 line-clamp-1">{result.description}</div>
-                        <code className="mt-1 text-xs bg-github-dark/30 px-2 py-1 rounded text-github-accent">
+                      <div className="flex flex-col gap-1 w-full">
+                        <div className="font-medium text-github-text flex items-center">
+                          <span className="mr-2">{result.title}</span>
+                          <span className="text-xs bg-github-dark/40 px-2 py-0.5 rounded-full text-github-accent/80 ml-auto">
+                            Command
+                          </span>
+                        </div>
+                        <div className="text-sm text-github-text/70 line-clamp-1">{result.description}</div>
+                        <code className="mt-1.5 text-xs bg-github-dark/30 px-2 py-1.5 rounded text-github-accent block w-full overflow-x-auto">
                           {result.command}
                         </code>
                       </div>
                     </CommandItem>
                   ))}
                 </CommandGroup>
-              )}
-              
-              {!searchQuery && (
-                <div className="p-4 text-center text-github-text/60">
-                  <p>Type to search for commands</p>
-                  <p className="text-xs mt-1">Try searching for "capture", "delay", or "window"</p>
-                </div>
               )}
             </CommandList>
           </Command>
