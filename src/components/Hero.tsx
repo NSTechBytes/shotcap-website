@@ -1,10 +1,9 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowDown, Star, GitFork, Monitor, Command, Download, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import DownloadDialog from './DownloadDialog';
-import { getTotalDownloads, incrementDownloadCount } from '@/services/downloadService';
+import { getTotalDownloads } from '@/services/downloadService';
 import { getLatestRelease } from '@/services/githubService';
 import FallingText from './FallingText';
 
@@ -31,28 +30,22 @@ const Hero = () => {
       observer.observe(heroRef.current);
     }
 
-    // Fetch download count and GitHub release info when component mounts
     const fetchData = async () => {
       try {
         setIsLoading(true);
         
-        // Fetch download count
         const count = await getTotalDownloads();
         setTotalDownloads(count);
         
-        // Fetch latest release info from GitHub
         const releaseInfo = await getLatestRelease();
         if (releaseInfo) {
-          // Remove v prefix if present
           const versionNumber = releaseInfo.tag_name.replace(/^v/, '');
           setVersion(versionNumber);
           
-          // Get download URL for ShotCap.exe
           const asset = releaseInfo.assets.find(asset => asset.name === "ShotCap.exe");
           if (asset) {
             setDownloadUrl(asset.browser_download_url);
           } else {
-            // Fallback URL
             setDownloadUrl("https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe");
           }
         }
@@ -72,22 +65,13 @@ const Hero = () => {
     };
   }, []);
 
-  const handleDownload = async (e: React.MouseEvent) => {
+  const handleDownload = (e: React.MouseEvent) => {
     e.preventDefault();
     setDownloadDialogOpen(true);
-    
-    try {
-      // Increment the download count and update state
-      const updatedCount = await incrementDownloadCount();
-      setTotalDownloads(updatedCount);
-    } catch (error) {
-      console.error("Failed to increment download count:", error);
-    }
   };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
-      {/* Animated floating dots */}
       <div className="absolute inset-0 overflow-hidden opacity-25 pointer-events-none">
         {[...Array(20)].map((_, i) => (
           <div
@@ -152,7 +136,6 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* Downloads counter */}
         <div className="mb-2 animate-slide-up" style={{animationDelay: '600ms'}}>
           <div className="inline-flex items-center px-4 py-2 rounded-full bg-github-card/50 border border-github-border">
             <Download className="w-4 h-4 mr-2 text-github-accent" />
@@ -168,7 +151,6 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* Replace the version label with FallingText */}
         <div className="mb-8 animate-slide-up" style={{animationDelay: '650ms'}}>
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-github-card/30 border border-github-border text-xs font-medium">
             <span>Version <span className="text-github-accent"><FallingText text={version} /></span></span>
@@ -193,7 +175,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Download Dialog - Pass the downloadUrl to the dialog */}
       <DownloadDialog 
         open={downloadDialogOpen} 
         onOpenChange={setDownloadDialogOpen}

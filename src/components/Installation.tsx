@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { Check, DownloadCloud, MonitorCheck, ShieldCheck, Settings, Github, Code, ExternalLink, FileCode, Youtube } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
@@ -43,14 +42,12 @@ const Installation = () => {
       observer.observe(buildSectionRef.current);
     }
 
-    // Fetch release info when component mounts
     const fetchReleaseInfo = async () => {
       try {
         setIsLoading(true);
         const release = await getLatestRelease();
         
         if (release) {
-          // Find ShotCap.exe asset
           const shotCapAsset = release.assets.find(asset => asset.name === "ShotCap.exe");
           
           if (shotCapAsset) {
@@ -77,17 +74,9 @@ const Installation = () => {
     };
   }, []);
 
-  const handleDownload = async (e: React.MouseEvent) => {
+  const handleDownload = (e: React.MouseEvent) => {
     e.preventDefault();
     setDownloadDialogOpen(true);
-    
-    try {
-      // Increment download count when download is initiated
-      await incrementDownloadCount();
-      console.log('Download initiated and count incremented');
-    } catch (error) {
-      console.error("Failed to increment download count:", error);
-    }
   };
 
   return (
@@ -135,7 +124,6 @@ const Installation = () => {
           <div className="mb-10">
             <h3 className="text-xl font-semibold mb-4">Installation Methods</h3>
             
-            {/* Method 1: Direct Download */}
             <div className="mb-8 bg-github-card rounded-xl border border-github-border p-6 transition-all duration-300 hover:shadow-md hover:shadow-github-accent/10 hover:border-github-accent/30">
               <h4 className="text-lg font-medium mb-3 flex items-center">
                 <DownloadCloud className="w-5 h-5 text-github-accent mr-2" />
@@ -168,7 +156,6 @@ const Installation = () => {
             </div>
           </div>
           
-          {/* Source Code and Building Section */}
           <div ref={buildSectionRef} className="opacity-0 translate-y-5 transition-all duration-700 ease-out">
             <h3 className="text-xl font-semibold mb-4 flex items-center">
               <Code className="w-5 h-5 text-github-accent mr-2" />
@@ -286,7 +273,6 @@ const Installation = () => {
         </div>
       </div>
 
-      {/* Download Dialog */}
       <DownloadDialog 
         open={downloadDialogOpen} 
         onOpenChange={setDownloadDialogOpen}

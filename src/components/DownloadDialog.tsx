@@ -13,9 +13,15 @@ interface DownloadDialogProps {
 
 const DownloadDialog = ({ open, onOpenChange, downloadUrl = "https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe" }: DownloadDialogProps) => {
   const [showLicenseTerms, setShowLicenseTerms] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   
   const handleDownload = async () => {
     try {
+      // Prevent multiple count increments
+      if (isDownloading) return;
+      
+      setIsDownloading(true);
+      
       // Increment the download count
       await incrementDownloadCount();
       
@@ -25,9 +31,11 @@ const DownloadDialog = ({ open, onOpenChange, downloadUrl = "https://github.com/
       // Close the dialog after a short delay
       setTimeout(() => {
         onOpenChange(false);
+        setIsDownloading(false);
       }, 1000);
     } catch (error) {
       console.error("Error during download:", error);
+      setIsDownloading(false);
     }
   };
 
@@ -75,9 +83,10 @@ const DownloadDialog = ({ open, onOpenChange, downloadUrl = "https://github.com/
             <Button 
               className="w-full sm:w-auto bg-github-accent hover:bg-github-accent/90 text-white gap-2"
               onClick={handleDownload}
+              disabled={isDownloading}
             >
               <Download className="w-4 h-4" />
-              Download Now
+              {isDownloading ? 'Downloading...' : 'Download Now'}
             </Button>
             <a 
               href="https://github.com/NSTechBytes/ShotCap/releases" 
