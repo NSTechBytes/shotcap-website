@@ -26,6 +26,14 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
   const [results, setResults] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Reset search when dialog opens/closes
+  useEffect(() => {
+    if (!open) {
+      setSearchQuery('');
+      setResults([]);
+    }
+  }, [open]);
+
   useEffect(() => {
     // Add keyboard shortcut for search (Ctrl+K or Cmd+K)
     const handleKeyDown = (e: KeyboardEvent) => {
