@@ -10,7 +10,7 @@ const db = createClient({
   authToken: TURSO_AUTH_TOKEN,
 });
 
-const APP_NAME = "shot_cap";
+const APP_NAME = "shot-cap";
 
 export async function getTotalDownloads(): Promise<number> {
   try {

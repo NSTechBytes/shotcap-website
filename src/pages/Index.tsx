@@ -5,7 +5,7 @@ import Hero from "@/components/Hero";
 import { getLatestRelease } from "@/services/githubService";
 
 export default function Index() {
-  const [version, setVersion] = useState("1.0.0");
+  const [version, setVersion] = useState("checking..");
 
   useEffect(() => {
     // Fetch version information for page title

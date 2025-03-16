@@ -16,9 +16,9 @@ const Installation = () => {
     date: string,
     fileSize: string,
   }>({
-    version: "1.0.0",
-    date: "2023",
-    fileSize: "7.2 MB"
+    version: "checking..",
+    date: "checking..",
+    fileSize: "checking.."
   });
   const [isLoading, setIsLoading] = useState(true);
 

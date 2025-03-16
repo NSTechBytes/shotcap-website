@@ -12,7 +12,7 @@ const Hero = () => {
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
   const [totalDownloads, setTotalDownloads] = useState<number>(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [version, setVersion] = useState("1.0.0");
+  const [version, setVersion] = useState("checking..");
   const [downloadUrl, setDownloadUrl] = useState("");
 
   useEffect(() => {
