@@ -2,15 +2,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Copy, Check } from 'lucide-react';
+import UsageSearch from './UsageSearch';
 
 type CodeExampleProps = {
   title: string;
   description: string;
   command: string;
   output?: string;
+  id: number;
 };
 
-const CodeExample = ({ title, description, command, output }: CodeExampleProps) => {
+const CodeExample = ({ title, description, command, output, id }: CodeExampleProps) => {
   const exampleRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
   
@@ -48,8 +50,9 @@ const CodeExample = ({ title, description, command, output }: CodeExampleProps) 
 
   return (
     <div 
+      id={`example-${id}`}
       ref={exampleRef} 
-      className="mb-10 opacity-0 translate-y-8 transition-all duration-700 ease-out"
+      className="mb-10 opacity-0 translate-y-8 transition-all duration-700 ease-out rounded-lg p-4 hover:bg-github-dark/20"
     >
       <h3 className="text-xl font-semibold mb-2">{title}</h3>
       <p className="text-github-text/70 mb-4">{description}</p>
@@ -202,15 +205,21 @@ const Usage = () => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Usage Examples</h2>
-          <p className="text-github-text/70 max-w-2xl mx-auto">
+          <p className="text-github-text/70 max-w-2xl mx-auto mb-8">
             See how ShotCap can be used in various scenarios through these simple command examples
           </p>
+          
+          {/* Search component */}
+          <div className="max-w-md mx-auto">
+            <UsageSearch usageExamples={usageExamples} />
+          </div>
         </div>
 
         <div className="max-w-3xl mx-auto">
           {usageExamples.map((example, index) => (
             <CodeExample
               key={index}
+              id={index}
               title={example.title}
               description={example.description}
               command={example.command}

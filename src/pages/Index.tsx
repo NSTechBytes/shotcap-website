@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import { getLatestRelease } from "@/services/githubService";
+import { toast } from "sonner";
 
 export default function Index() {
   const [version, setVersion] = useState("1.0.0");
@@ -16,9 +17,18 @@ export default function Index() {
           // Remove v prefix if present
           const versionNumber = releaseInfo.tag_name.replace(/^v/, '');
           setVersion(versionNumber);
+          
+          // Show a toast when version is loaded successfully
+          toast.success("Latest release loaded", {
+            description: `ShotCap v${versionNumber} is now available!`,
+            duration: 3000,
+          });
         }
       } catch (error) {
         console.error("Failed to fetch version:", error);
+        toast.error("Couldn't fetch latest version", {
+          description: "Using default version information.",
+        });
       }
     };
 
