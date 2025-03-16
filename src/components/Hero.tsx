@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import DownloadDialog from './DownloadDialog';
 import { getTotalDownloads, incrementDownloadCount } from '@/services/downloadService';
 import { getLatestRelease } from '@/services/githubService';
+import FallingText from './FallingText';
 
 const Hero = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -167,10 +168,10 @@ const Hero = () => {
           </div>
         </div>
         
-        {/* Version label updated to use GitHub API data */}
+        {/* Replace the version label with FallingText */}
         <div className="mb-8 animate-slide-up" style={{animationDelay: '650ms'}}>
           <div className="inline-flex items-center px-3 py-1 rounded-full bg-github-card/30 border border-github-border text-xs font-medium">
-            <span>Version <span className="text-github-accent">{version}</span></span>
+            <span>Version <span className="text-github-accent"><FallingText text={version} /></span></span>
           </div>
         </div>
         
