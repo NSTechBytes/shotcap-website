@@ -184,6 +184,18 @@ const Usage = () => {
       description: "List all visible top-level windows.",
       command: "ShotCap.exe -listwindows",
       output: "Visible windows:\n1. 'ShotCap Documentation - Google Chrome'\n2. 'Untitled - Notepad'\n3. 'File Explorer'\n4. 'Settings'"
+    },
+    {
+      title: "Check Installation",
+      description: "Verify ShotCap installation and check the version.",
+      command: "ShotCap -v",
+      output: "ShotCap v1.3\nInstalled successfully"
+    },
+    {
+      title: "Enable Verbose Logging",
+      description: "Run any command with detailed logging for troubleshooting.",
+      command: "ShotCap -vl -f screenshot.png",
+      output: "Verbose logging enabled\nInitializing capture...\nChecking display settings...\nCapturing screen...\nProcessing image...\nSaving to: C:\\Users\\username\\screenshot.png\nScreenshot saved successfully"
     }
   ];
 
