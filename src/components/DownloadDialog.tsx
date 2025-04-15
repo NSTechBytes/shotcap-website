@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogFooter, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -9,26 +8,28 @@ interface DownloadDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   downloadUrl?: string;
+  isSetup?: boolean;
 }
 
-const DownloadDialog = ({ open, onOpenChange, downloadUrl = "https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe" }: DownloadDialogProps) => {
+const DownloadDialog = ({ 
+  open, 
+  onOpenChange, 
+  downloadUrl = "https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe",
+  isSetup = false 
+}: DownloadDialogProps) => {
   const [showLicenseTerms, setShowLicenseTerms] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   
   const handleDownload = async () => {
     try {
-      // Prevent multiple count increments
       if (isDownloading) return;
       
       setIsDownloading(true);
       
-      // Increment the download count
       await incrementDownloadCount();
       
-      // Trigger the download
       window.location.href = downloadUrl;
       
-      // Close the dialog after a short delay
       setTimeout(() => {
         onOpenChange(false);
         setIsDownloading(false);
@@ -51,7 +52,7 @@ const DownloadDialog = ({ open, onOpenChange, downloadUrl = "https://github.com/
           <DialogHeader>
             <DialogTitle className="text-xl font-semibold">Download ShotCap</DialogTitle>
             <DialogDescription className="text-github-text/70">
-              You're downloading the latest version of ShotCap for Windows
+              You're downloading the {isSetup ? 'installer' : 'portable'} version of ShotCap for Windows
             </DialogDescription>
           </DialogHeader>
           
@@ -101,7 +102,6 @@ const DownloadDialog = ({ open, onOpenChange, downloadUrl = "https://github.com/
         </DialogContent>
       </Dialog>
 
-      {/* License Terms Dialog */}
       <Dialog open={showLicenseTerms} onOpenChange={setShowLicenseTerms}>
         <DialogContent className="bg-github-card border-github-border max-w-2xl max-h-[80vh] overflow-y-auto">
           <DialogHeader>

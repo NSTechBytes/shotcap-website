@@ -14,6 +14,12 @@ const Hero = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [version, setVersion] = useState("checking..");
   const [downloadUrl, setDownloadUrl] = useState("");
+  const [downloadInfo, setDownloadInfo] = useState({
+    setup: {
+      url: "https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap_Setup_v1.0.exe",
+      size: "checking.."
+    }
+  });
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -42,11 +48,15 @@ const Hero = () => {
           const versionNumber = releaseInfo.tag_name.replace(/^v/, '');
           setVersion(versionNumber);
           
-          const asset = releaseInfo.assets.find(asset => asset.name === "ShotCap.exe");
-          if (asset) {
-            setDownloadUrl(asset.browser_download_url);
-          } else {
-            setDownloadUrl("https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe");
+          const setupAsset = releaseInfo.assets.find(asset => asset.name.includes("Setup"));
+          if (setupAsset) {
+            setDownloadUrl(setupAsset.browser_download_url);
+            setDownloadInfo({
+              setup: {
+                url: setupAsset.browser_download_url,
+                size: formatFileSize(setupAsset.size)
+              }
+            });
           }
         }
       } catch (error) {
