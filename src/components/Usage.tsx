@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Copy, Check } from 'lucide-react';
@@ -209,7 +208,6 @@ const Usage = () => {
             See how ShotCap can be used in various scenarios through these simple command examples
           </p>
           
-          {/* Search component */}
           <div className="max-w-md mx-auto">
             <UsageSearch usageExamples={usageExamples} />
           </div>
@@ -250,7 +248,8 @@ Options:
   -repeat <i> <n>       Repeat capture every i seconds for n times
   -listmonitors         List available monitors and exit
   -listwindows          List visible top-level windows and exit
-  -v                    Enable verbose logging
+  -vl                   Enable verbose logging
+  -v, --version         Display version information and exit
   -h, --help            Display this help message`)}
                 className="p-1.5 text-github-text/70 hover:text-github-accent rounded"
                 title="Copy to clipboard"
@@ -279,7 +278,8 @@ Options:
   -repeat <i> <n>       Repeat capture every i seconds for n times
   -listmonitors         List available monitors and exit
   -listwindows          List visible top-level windows and exit
-  -v                    Enable verbose logging
+  -vl                   Enable verbose logging
+  -v, --version         Display version information and exit
   -h, --help            Display this help message`}
               </code>
             </div>
