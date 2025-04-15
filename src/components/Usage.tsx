@@ -189,7 +189,7 @@ const Usage = () => {
       title: "Check Installation",
       description: "Verify ShotCap installation and check the version.",
       command: "ShotCap -v",
-      output: "ShotCap v1.3\nInstalled successfully"
+      output: "ShotCap Version <InstalledVersion>"
     },
     {
       title: "Enable Verbose Logging",
