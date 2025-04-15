@@ -3,19 +3,22 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogFooter, D
 import { Button } from '@/components/ui/button';
 import { Download, ExternalLink } from 'lucide-react';
 import { incrementDownloadCount } from '@/services/downloadService';
+import { formatFileSize } from '@/services/githubService';
 
 interface DownloadDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   downloadUrl?: string;
   isSetup?: boolean;
+  fileSize?: number;
 }
 
 const DownloadDialog = ({ 
   open, 
   onOpenChange, 
-  downloadUrl = "https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe",
-  isSetup = false 
+  downloadUrl = "",
+  isSetup = false,
+  fileSize = 0
 }: DownloadDialogProps) => {
   const [showLicenseTerms, setShowLicenseTerms] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -53,6 +56,7 @@ const DownloadDialog = ({
             <DialogTitle className="text-xl font-semibold">Download ShotCap</DialogTitle>
             <DialogDescription className="text-github-text/70">
               You're downloading the {isSetup ? 'installer' : 'portable'} version of ShotCap for Windows
+              {fileSize > 0 && ` (${formatFileSize(fileSize)})`}
             </DialogDescription>
           </DialogHeader>
           
