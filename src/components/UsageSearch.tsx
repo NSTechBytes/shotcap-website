@@ -139,7 +139,7 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
                 placeholder="Search for commands..."
                 value={searchQuery}
                 onValueChange={handleSearchChange}
-                className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base"
+                className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base w-[500px]" // Increased width
                 showIcon={false}
               />
               {searchQuery && (
