@@ -140,6 +140,7 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
                 value={searchQuery}
                 onValueChange={handleSearchChange}
                 className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base"
+                showIcon={false}
               />
               {searchQuery && (
                 <button onClick={() => setSearchQuery('')} className="p-1 hover:bg-github-dark/20 rounded">
