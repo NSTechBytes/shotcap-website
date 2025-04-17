@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Command, CommandInput, CommandList, CommandGroup, CommandItem, CommandEmpty } from '@/components/ui/command';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface SearchResult {
   title: string;
@@ -25,6 +26,7 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+  const isMobile = useIsMobile();
 
   // Reset search when dialog opens/closes
   useEffect(() => {
@@ -129,7 +131,7 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
       </button>
       
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="p-0 gap-0 border-github-border bg-github-card max-w-3xl mx-auto">
+        <DialogContent className="p-0 gap-0 border-github-border bg-github-card max-w-3xl mx-auto w-[calc(100%-2rem)] sm:w-auto">
           <DialogTitle className="sr-only">Search Commands</DialogTitle>
           <Command className="rounded-lg">
             <div className="flex items-center border-b border-github-border p-3">
@@ -139,7 +141,7 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
                 placeholder="Search for commands..."
                 value={searchQuery}
                 onValueChange={handleSearchChange}
-                className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base w-[500px]" // Increased width
+                className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base w-full md:w-[500px]"
                 showIcon={false}
               />
               {searchQuery && (
@@ -149,7 +151,7 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
               )}
             </div>
             
-            <CommandList className="max-h-[70vh] overflow-y-auto py-2">
+            <CommandList className="max-h-[50vh] md:max-h-[70vh] overflow-y-auto py-2">
               <CommandEmpty className="py-6 text-center text-github-text/60">
                 No results found for "{searchQuery}"
               </CommandEmpty>
