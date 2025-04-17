@@ -11,6 +11,8 @@ const Installation = () => {
   const buildSectionRef = useRef<HTMLDivElement>(null);
   const [downloadDialogOpen, setDownloadDialogOpen] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState("https://github.com/NSTechBytes/ShotCap/releases/download/v1.0/ShotCap.exe");
+  const [isSetup, setIsSetup] = useState(false);
+  const [fileSize, setFileSize] = useState(0);
   const [releaseInfo, setReleaseInfo] = useState<{
     version: string,
     date: string,
@@ -92,8 +94,11 @@ const Installation = () => {
     };
   }, []);
 
-  const handleDownload = (e: React.MouseEvent) => {
+  const handleDownload = (e: React.MouseEvent, isSetupVersion: boolean, url: string, size: number = 0) => {
     e.preventDefault();
+    setIsSetup(isSetupVersion);
+    setDownloadUrl(url);
+    setFileSize(size);
     setDownloadDialogOpen(true);
   };
 
@@ -158,7 +163,7 @@ const Installation = () => {
                 <a 
                   href="#download" 
                   className="inline-flex items-center text-github-accent hover:text-github-accent/90 mb-4 transition-colors"
-                  onClick={handleDownload}
+                  onClick={(e) => handleDownload(e, false, downloadInfo.portable.url)}
                 >
                   <DownloadCloud className="w-5 h-5 mr-2" />
                   Download ShotCap.exe ({releaseInfo.fileSize})
@@ -268,7 +273,7 @@ const Installation = () => {
                 <>
                   <a 
                     href={downloadInfo.standard.url} 
-                    onClick={(e) => handleDownload(e)}
+                    onClick={(e) => handleDownload(e, true, downloadInfo.standard.url)}
                     className="p-4 bg-github-dark rounded-lg border border-github-border hover:border-github-accent/70 transition-all duration-300 hover:scale-105 flex flex-col items-center text-center"
                   >
                     <DownloadCloud className="w-6 h-6 text-github-accent mb-2" />
@@ -278,7 +283,7 @@ const Installation = () => {
                   </a>
                   <a 
                     href={downloadInfo.portable.url} 
-                    onClick={(e) => handleDownload(e)}
+                    onClick={(e) => handleDownload(e, false, downloadInfo.portable.url)}
                     className="p-4 bg-github-dark rounded-lg border border-github-border hover:border-github-accent/70 transition-all duration-300 hover:scale-105 flex flex-col items-center text-center"
                   >
                     <DownloadCloud className="w-6 h-6 text-github-accent mb-2" />
@@ -307,6 +312,8 @@ const Installation = () => {
         open={downloadDialogOpen} 
         onOpenChange={setDownloadDialogOpen}
         downloadUrl={downloadUrl}
+        isSetup={isSetup}
+        fileSize={fileSize}
       />
     </section>
   );
