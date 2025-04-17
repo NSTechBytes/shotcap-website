@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, X } from 'lucide-react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Command, CommandInput, CommandList, CommandGroup, CommandItem, CommandEmpty } from '@/components/ui/command';
 
 interface SearchResult {
@@ -130,6 +130,7 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
       
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="p-0 gap-0 border-github-border bg-github-card max-w-3xl mx-auto">
+          <DialogTitle className="sr-only">Search Commands</DialogTitle>
           <Command className="rounded-lg">
             <div className="flex items-center border-b border-github-border p-3">
               <Search className="w-5 h-5 mr-2 shrink-0 text-github-text/40" />
