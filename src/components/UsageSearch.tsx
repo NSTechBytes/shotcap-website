@@ -133,24 +133,24 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent 
           hideCloseButton={true}
-          className="p-0 gap-0 border-github-border bg-github-card max-w-3xl mx-auto w-[calc(100%-2rem)] sm:w-auto"
+          className="p-0 gap-0 border-github-border bg-github-card max-w-3xl mx-auto w-[calc(100%-2rem)] sm:w-auto sm:min-w-[500px] sm:max-w-[90vw]"
         >
           <DialogTitle className="sr-only">Search Commands</DialogTitle>
           <Command className="rounded-lg">
-            <div className="flex items-center border-b border-github-border p-3">
+            <div className="flex items-center border-b border-github-border p-3 relative">
               <Search className="w-5 h-5 mr-2 shrink-0 text-github-text/40" />
               <CommandInput
                 ref={inputRef}
                 placeholder="Search for commands..."
                 value={searchQuery}
                 onValueChange={handleSearchChange}
-                className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base w-full md:w-[500px]"
+                className="flex-1 outline-none border-0 focus:ring-0 text-github-text text-base w-full pr-10"
                 showIcon={false}
               />
               {searchQuery && (
                 <button 
                   onClick={() => setSearchQuery('')} 
-                  className="p-1 hover:bg-github-dark/20 rounded mr-2"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 hover:bg-github-dark/20 rounded"
                   aria-label="Clear search"
                   title="Clear search"
                 >
