@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Search, X } from 'lucide-react';
+import { Search, XCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { Command, CommandInput, CommandList, CommandGroup, CommandItem, CommandEmpty } from '@/components/ui/command';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -131,7 +131,10 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
       </button>
       
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="p-0 gap-0 border-github-border bg-github-card max-w-3xl mx-auto w-[calc(100%-2rem)] sm:w-auto">
+        <DialogContent 
+          hideCloseButton={true}
+          className="p-0 gap-0 border-github-border bg-github-card max-w-3xl mx-auto w-[calc(100%-2rem)] sm:w-auto"
+        >
           <DialogTitle className="sr-only">Search Commands</DialogTitle>
           <Command className="rounded-lg">
             <div className="flex items-center border-b border-github-border p-3">
@@ -145,8 +148,13 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
                 showIcon={false}
               />
               {searchQuery && (
-                <button onClick={() => setSearchQuery('')} className="p-1 hover:bg-github-dark/20 rounded">
-                  <X className="w-4 h-4 text-github-text/60 hover:text-github-text" />
+                <button 
+                  onClick={() => setSearchQuery('')} 
+                  className="p-1 hover:bg-github-dark/20 rounded mr-2"
+                  aria-label="Clear search"
+                  title="Clear search"
+                >
+                  <XCircle className="w-5 h-5 text-github-text/60 hover:text-github-text" />
                 </button>
               )}
             </div>
@@ -182,6 +190,17 @@ const UsageSearch = ({ usageExamples }: UsageSearchProps) => {
               )}
             </CommandList>
           </Command>
+          
+          {/* Add a dedicated close button at the bottom for better mobile UX */}
+          <div className="p-3 border-t border-github-border flex justify-center">
+            <button 
+              onClick={() => setOpen(false)}
+              className="px-4 py-2 rounded-md bg-github-dark/30 hover:bg-github-dark/50 text-github-text/80 hover:text-github-text transition-all"
+              aria-label="Close search"
+            >
+              Close Search
+            </button>
+          </div>
         </DialogContent>
       </Dialog>
     </>
