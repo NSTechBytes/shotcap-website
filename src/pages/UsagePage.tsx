@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import Header from '@/components/Header';
 import Usage from '@/components/Usage';
-import { DialogDescription } from '@/components/ui/dialog';
+import { Dialog } from '@/components/ui/dialog';
 
 const UsagePage = () => {
   useEffect(() => {
@@ -16,12 +16,7 @@ const UsagePage = () => {
       <main className="pt-20 flex-1">
         <Usage />
       </main>
-      {/* Hidden DialogDescription to handle the dialog accessibility warning */}
-      <div className="hidden">
-        <DialogDescription id="search-dialog-description">
-          Search for commands and usage examples
-        </DialogDescription>
-      </div>
+      {/* Remove the hidden DialogDescription that was causing the error */}
     </div>
   );
 };
